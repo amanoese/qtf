@@ -1,0 +1,20 @@
+{
+  "name": "qtf",
+  "version": "0.1.0",
+  "description": "command for want to Quick use TensorFlow.js on cli.",
+  "main": "index.js",
+  "bin": {
+    "qtf": "src/index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Seito Taka",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@tensorflow-models/posenet": "^2.2.1",
+    "@tensorflow/tfjs-node": "^2.6.0",
+    "caporal": "^1.4.0",
+    "pureimage": "^0.2.5"
+  }
+}
