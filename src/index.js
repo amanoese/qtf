@@ -17,7 +17,7 @@ prog
       console.log(JSON.stringify(result))
       return
     }
-    await posenet.out_image(args.image,option.o,result)
+    await posenet.out_image(args.image,options.o,result)
   })
   .command('cocossd', 'Using Coco SSD')
   .option('--tail <lines>', 'Tail <lines> lines of logs after deploy', prog.INT)
