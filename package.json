@@ -7,14 +7,24 @@
     "qtf": "src/index.js"
   },
   "scripts": {
+    "build": "rollup -c",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Seito Taka",
   "license": "Apache-2.0",
   "dependencies": {
+    "@tensorflow-models/blazeface": "0.0.5",
     "@tensorflow-models/posenet": "^2.2.1",
     "@tensorflow/tfjs-node": "^2.6.0",
+    "@tensorflow/tfjs-node-gpu": "^2.6.0",
     "caporal": "^1.4.0",
     "pureimage": "^0.2.5"
+  },
+  "devDependencies": {
+    "rollup": "^2.32.1",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-json": "^4.0.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-terser": "^7.0.2"
   }
 }

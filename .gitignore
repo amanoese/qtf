@@ -1,3 +1,7 @@
 node_modules/
+models/
+!models/.gitkeep
+dist/
+!dist/.gitkeep
 test_img/
 *.jpg

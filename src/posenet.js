@@ -3,17 +3,29 @@ const fsp = require('fs').promises;
 const tf = require('@tensorflow/tfjs-node');
 //const tf = require('@tensorflow/tfjs-node-gpu');
 const posenet = require('@tensorflow-models/posenet');
+const { img_to_t3d } = require('./utils');
 
-let img_to_t3d = async (imagePath) => {
-  const imgFile = await fsp.readFile(imagePath);
-  const img_u8a = new Uint8Array(imgFile);
-  const img_Tensor3D = tf.node.decodeJpeg(img_u8a);
-  return img_Tensor3D;
+let load_posenet = async (LoadOption = {}) => {
+  let option = {};
+  let err = await fsp.access('./models/posenet/model.json')
+  if(!err) {
+    console.warn('[QTF] Using local model');
+    option = {
+      modelUrl:'file://./models/posenet/model.json',
+    };
+  }
+  return await posenet.load({ ...option, ...LoadOption });
 }
 
-async function run (imagePath,LoadOption = {}) {
+async function save_model () {
+  //TODO: Not enough because posenet is multiple models.
+  let net = await posenet.load()
+  await net.baseModel.model.save('file://./models/posenet')
+  console.log('save posenet!')
+}
+async function run (imagePath,LoadOption) {
   const [ net, img_Tensor3D ] = await Promise.all([
-    await posenet.load(),
+    await load_posenet(),
     await img_to_t3d(imagePath)
   ]);
 
@@ -49,11 +61,12 @@ async function out_image (imagePath,outPath = './out.jpg',result = {}) {
   })
 
   await PImage.encodeJPEGToStream(img2,fs.createWriteStream(outPath), 100);
-  console.log(`done writing To "${outPath}"`);
+  //console.log(`done writing To "${outPath}"`);
 }
 
 
 module.exports = {
+  save_model,
   run,
   out_image
 }
