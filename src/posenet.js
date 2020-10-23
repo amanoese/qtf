@@ -3,18 +3,20 @@ const fsp = require('fs').promises;
 const tf = require('@tensorflow/tfjs-node');
 //const tf = require('@tensorflow/tfjs-node-gpu');
 const posenet = require('@tensorflow-models/posenet');
+const PImage = require('pureimage');
 const { img_to_t3d } = require('./utils');
 
 let load_posenet = async (LoadOption = {}) => {
-  let option = {};
   let err = await fsp.access('./models/posenet/model.json')
   if(!err) {
     console.warn('[QTF] Using local model');
-    option = {
+
+    return await posenet.load({
       modelUrl:'file://./models/posenet/model.json',
-    };
+      ...LoadOption
+    });
   }
-  return await posenet.load({ ...option, ...LoadOption });
+  return await posenet.load({ ...LoadOption });
 }
 
 async function save_model () {
@@ -23,6 +25,7 @@ async function save_model () {
   await net.baseModel.model.save('file://./models/posenet')
   console.log('save posenet!')
 }
+
 async function run (imagePath,LoadOption) {
   const [ net, img_Tensor3D ] = await Promise.all([
     await load_posenet(),
@@ -35,7 +38,6 @@ async function run (imagePath,LoadOption) {
 
 async function out_image (imagePath,outPath = './out.jpg',result = {}) {
 
-  const PImage = require('pureimage');
   let pimg = await PImage.decodeJPEGFromStream(fs.createReadStream(imagePath))
 
   //console.log('size is',pimg.width,pimg.height);

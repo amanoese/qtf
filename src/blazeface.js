@@ -3,6 +3,7 @@ const fsp = require('fs').promises;
 const tf = require('@tensorflow/tfjs-node');
 //const tf = require('@tensorflow/tfjs-node-gpu');
 const blazeface = require('@tensorflow-models/blazeface');
+const PImage = require('pureimage');
 const { img_to_t3d } = require('./utils');
 
 let load_model = async (LoadOption = {}) => {
@@ -11,7 +12,6 @@ let load_model = async (LoadOption = {}) => {
     // '@tensorflow-models/blazeface' is not support modelurl option.
     // https://github.com/tensorflow/tfjs-models/pull/534
     // https://github.com/tensorflow/tfjs-models/blob/master/blazeface/src/index.ts#L36-L50
-
 
     let option = {
       maxFaces = 10,
@@ -42,11 +42,48 @@ async function save_model () {
   //TODO: Not enough because posenet is multiple models.
   const model = await blazeface.load();
   await model.blazeFaceModel.save('file://./models/blazeface')
-  console.log('save posenet!')
+  console.log('save blazeface!')
+}
+
+async function out_image (imagePath,outPath = './out.jpg',result = {}) {
+
+  let pimg = await PImage.decodeJPEGFromStream(fs.createReadStream(imagePath))
+
+  //console.log('size is',pimg.width,pimg.height);
+  const img2 = PImage.make(pimg.width,pimg.height);
+
+  var ctx = img2.getContext('2d');
+  ctx.drawImage(pimg,
+      0, 0, pimg.width, pimg.height, // source dimensions
+      0, 0, pimg.width, pimg.height, // destination dimensions
+  );
+
+  result.filter(({probability})=>{
+    //return probability > 0.5
+    return true
+  }).forEach(face => {
+    let [ x1, y1 ] = face.topLeft
+    let [ x2, y2 ] = face.bottomRight
+    let [ width, height ] = [(x2 - x1) , (y2 - y1)]
+    ctx.fillStyle = 'rgba(255,0,0, 0.5)';
+    ctx.fillRect( x1, y1, width, height);
+
+    ctx.fillStyle = '#0000ff';
+    face.landmarks.forEach(point => {
+      let [ x, y ] = point
+      ctx.beginPath();
+      ctx.arc(x,y,5,0, Math.PI*2);
+      ctx.closePath();
+      ctx.fill()
+    })
+  })
+
+  await PImage.encodeJPEGToStream(img2,fs.createWriteStream(outPath), 100);
 }
 
 module.exports = {
   run,
   save_model,
+  out_image,
 }
 
