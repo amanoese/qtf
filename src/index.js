@@ -1,4 +1,4 @@
-//#!/usr/bin/env node
+#!/usr/bin/env node
 const prog = require('caporal');
 const _posenet = require('./posenet')
 const _blazeface = require('./blazeface')
