@@ -6,6 +6,7 @@ models/
 dist/
 !dist/.gitkeep
 
-*.jpg
 *.tif
-!__test__/lena.jpg
+*.jpg
+
+!__tests__/lena.jpg
