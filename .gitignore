@@ -1,7 +1,11 @@
 node_modules/
+
 models/
 !models/.gitkeep
+
 dist/
 !dist/.gitkeep
+
 *.jpg
 *.tif
+!__test__/lena.jpg

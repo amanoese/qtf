@@ -3,8 +3,8 @@ const prog = require('caporal');
 
 process.env['TF_CPP_MIN_LOG_LEVEL'] = '2' //avoid tf message
 
-const _posenet = require('./posenet')
-const _blazeface = require('./blazeface')
+const _posenet = require('./qtf-posenet.js')
+const _blazeface = require('./qtf-blazeface.js')
 
 const supports = ['posenet','blazeface']
 

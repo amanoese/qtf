@@ -4,7 +4,7 @@ const tf = require('@tensorflow/tfjs-node');
 //const tf = require('@tensorflow/tfjs-node-gpu');
 const blazeface = require('@tensorflow-models/blazeface');
 const PImage = require('pureimage');
-const { img_to_t3d } = require('./utils');
+const { img_to_t3d } = require('./utils.js');
 
 let load_model = async (LoadOption = {}) => {
   try {

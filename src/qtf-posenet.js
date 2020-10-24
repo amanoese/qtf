@@ -4,9 +4,9 @@ const tf = require('@tensorflow/tfjs-node');
 //const tf = require('@tensorflow/tfjs-node-gpu');
 const posenet = require('@tensorflow-models/posenet');
 const PImage = require('pureimage');
-const { img_to_t3d } = require('./utils');
+const { img_to_t3d } = require('./utils.js');
 
-let load_posenet = async (LoadOption = {}) => {
+let load_model = async (LoadOption = {}) => {
   try {
     await fsp.access('./models/posenet/model.json')
     console.warn('[QTF] Using local model');
@@ -29,7 +29,7 @@ async function save_model () {
 
 async function run (imagePath,LoadOption) {
   const [ net, img_Tensor3D ] = await Promise.all([
-    await load_posenet(),
+    await load_model(),
     await img_to_t3d(imagePath)
   ]);
 
@@ -67,8 +67,8 @@ async function out_image (imagePath,outPath = './out.jpg',result = {}) {
   //console.log(`done writing To "${outPath}"`);
 }
 
-
 module.exports = {
+  load_model,
   save_model,
   run,
   out_image

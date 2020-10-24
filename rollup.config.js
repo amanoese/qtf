@@ -1,9 +1,11 @@
 import shebang from 'rollup-plugin-preserve-shebang';
 import json from 'rollup-plugin-json';
-//import resolve from 'rollup-plugin-node-resolve';
+import injectProcessEnv from 'rollup-plugin-inject-process-env';
+import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
-import { terser } from "rollup-plugin-terser";
+//import { terser } from "rollup-plugin-terser";
 
+// do not use rollup.js ....
 export default {
   input: 'src/index.js',
   output: {
@@ -15,6 +17,11 @@ export default {
     json(),
     //resolve(),
     commonjs(),
-    terser()
+    injectProcessEnv({
+      TF_CPP_MIN_LOG_LEVEL:2
+    },{
+      verbose: true
+    }),
+    //terser()
   ]
 }
