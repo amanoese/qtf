@@ -1,5 +1,7 @@
 #!/usr/bin/env node
-const prog = require('caporal');
+const { program } = require('@caporal/core');
+
+
 
 process.env['TF_CPP_MIN_LOG_LEVEL'] = '2' //avoid tf message
 
@@ -8,12 +10,15 @@ const _blazeface = require('./qtf-blazeface.js')
 
 const supports = ['posenet','blazeface']
 
-prog
+program
   .name('qtf')
-//  .bin('qtf')
+  .bin('qtf')
   .version(require('../package.json').version)
   .command('posenet', 'Using Posenet')
-  .argument('<in-file-path>', 'input image file\nSupport for JPG,PNG,BMP')
+  .argument(
+    '<in-file-path>',
+    'input image file\nSupport for JPG,PNG,BMP'
+   )
   .option('-l <load-option>','useing load option by json')
   .option('-o <out-file-path>','output to jpeg')
   .action(async function(args, options, logger) {
@@ -29,7 +34,10 @@ prog
     await _posenet.out_image(args.inFilePath,options.o,result)
   })
   .command('blazeface', 'Using blazeface')
-  .argument('<in-file-path>', 'input image file\nSupport for JPG,PNG,BMP')
+  .argument(
+    '<in-file-path>',
+    'input image file\nSupport for JPG,PNG,BMP'
+   )
   .option('-o <out-file-path>','output to jpeg')
   .action(async function(args, options, logger) {
 
@@ -41,7 +49,11 @@ prog
     await _blazeface.out_image(args.inFilePath,options.o,result)
   })
   .command('save', 'Download pre-trained moeles to local file')
-  .argument('<model-name>', `pre-trained model name \n:[ ${['all',...supports].toString()} ]`,['all',...supports])
+  .argument(
+     '<model-name>',
+     `pre-trained model name \n:[ ${['all',...supports].toString()} ]`,
+     { validator : ['all',...supports] }
+   )
   .action(async function(args, options, logger) {
     if(/^(posenet|all)$/.test(args.modelName)) {
       _posenet.save_model();
@@ -50,4 +62,7 @@ prog
       _blazeface.save_model();
     }
   });
-prog.parse(process.argv);
+
+program.run();
+//program.run(process.argv.slice(2))
+

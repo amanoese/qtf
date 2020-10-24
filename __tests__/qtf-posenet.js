@@ -12,9 +12,7 @@ const test_img = '__tests__/lena.jpg'
 
 describe('posenet by gcp remote model',()=>{
   beforeAll(async ()=>{
-    await exec('rm -r models/')
-    await exec('mkdir models/')
-    await exec('touch models/.gitkeep')
+    await exec('bash -c "test -d models/posenet && rm -r models/posenet" || :')
   })
 
   test('load',async ()=>{

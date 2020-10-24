@@ -53,6 +53,14 @@ Output JSON.
 $ qtf posenet input.jpg
 ```
 
+## Deeplab
+
+```bash
+$ npm install
+$ npm link
+$ qtf --help
+```
+
 ### On the roadmap, but still missing
 
 - Support tfjs-models
