@@ -1,7 +1,11 @@
 #!/usr/bin/env node
 const prog = require('caporal');
+
+process.env['TF_CPP_MIN_LOG_LEVEL'] = '2' //avoid tf message
+
 const _posenet = require('./posenet')
 const _blazeface = require('./blazeface')
+
 const supports = ['posenet','blazeface']
 
 prog
@@ -9,14 +13,14 @@ prog
 //  .bin('qtf')
   .version(require('../package.json').version)
   .command('posenet', 'Using Posenet')
-  .argument('<image>', 'image')
-  .option('-l <LoadOption>','useing load option by json')
-  .option('-o <outputImagePath>','output to jpeg')
+  .argument('<in-file-path>', 'input image file\nSupport for JPG,PNG,BMP')
+  .option('-l <load-option>','useing load option by json')
+  .option('-o <out-file-path>','output to jpeg')
   .action(async function(args, options, logger) {
     //console.log({args,options})
 
     let LoadOption = options.l ? JSON.parse(options.l) : {}
-    let result = await _posenet.run(args.image,LoadOption)
+    let result = await _posenet.run(args.imageFilePath,LoadOption)
 
     if (options.o == null) {
       console.log(JSON.stringify(result))
@@ -25,9 +29,10 @@ prog
     await _posenet.out_image(args.image,options.o,result)
   })
   .command('blazeface', 'Using blazeface')
-  .argument('<image>', 'image')
+  .argument('<in-file-path>', 'input image file\nSupport for JPG,PNG,BMP')
   .option('-o <outputImagePath>','output to jpeg')
   .action(async function(args, options, logger) {
+
     let result = await _blazeface.run(args.image)
     if (options.o == null) {
       console.log(JSON.stringify(result))
@@ -35,13 +40,13 @@ prog
     }
     await _blazeface.out_image(args.image,options.o,result)
   })
-  .command('save', 'download pre-trained moeles to local file')
-  .argument('<modelname>', `pre-trained model name \n:[ ${['all',...supports].toString()} ]`,['all',...supports])
+  .command('save', 'Download pre-trained moeles to local file')
+  .argument('<model-name>', `pre-trained model name \n:[ ${['all',...supports].toString()} ]`,['all',...supports])
   .action(async function(args, options, logger) {
-    if(/^(posenet|all)$/.test(args.modelname)) {
+    if(/^(posenet|all)$/.test(args.modelName)) {
       _posenet.save_model();
     }
-    if(/^(blazeface|all)$/.test(args.modelname)) {
+    if(/^(blazeface|all)$/.test(args.modelName)) {
       _blazeface.save_model();
     }
   });
