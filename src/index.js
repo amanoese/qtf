@@ -19,9 +19,9 @@ program
     '<in-file-path>',
     'input image file\nSupport for JPG,PNG,BMP'
    )
-  .option('-l <load-option>','useing load option by json')
-  .option('-o <out-file-path>','output to jpeg')
-  .action(async function(args, options, logger) {
+  .option('-l <load-option>','useing load option by json', { required :false })
+  .option('-o <out-file-path>','output to jpeg', { required :false })
+  .action(async function({args, options, logger}) {
     //console.log({args,options})
 
     let LoadOption = options.l ? JSON.parse(options.l) : {}
@@ -38,8 +38,8 @@ program
     '<in-file-path>',
     'input image file\nSupport for JPG,PNG,BMP'
    )
-  .option('-o <out-file-path>','output to jpeg')
-  .action(async function(args, options, logger) {
+  .option('-o <out-file-path>','output to jpeg', { required :false })
+  .action(async function({args, options, logger}) {
 
     let result = await _blazeface.run(args.inFilePath)
     if (options.o == null) {
@@ -54,7 +54,7 @@ program
      `pre-trained model name \n:[ ${['all',...supports].toString()} ]`,
      { validator : ['all',...supports] }
    )
-  .action(async function(args, options, logger) {
+  .action(async function({args, options, logger}) {
     if(/^(posenet|all)$/.test(args.modelName)) {
       _posenet.save_model();
     }
