@@ -7,9 +7,8 @@ const exec = util.promisify(require('child_process').exec);
 
 describe('',()=>{
   test('help',async ()=>{
-    let { stdout } = await exec(`${qtf_cmd} --help`)
-    expect(stdout).toEqual(
-      expect.stringContaining('▸ qtf <command> [ARGUMENTS...] [OPTIONS...]')
-    );
+    let { stdout } = await exec(`${qtf_cmd} --no-color --help`)
+    expect(stdout.toString())
+      .toMatch(/qtf \d.\d\.\d/)
   })
 })
