@@ -20,25 +20,25 @@ prog
     //console.log({args,options})
 
     let LoadOption = options.l ? JSON.parse(options.l) : {}
-    let result = await _posenet.run(args.imageFilePath,LoadOption)
+    let result = await _posenet.run(args.inFilePath,LoadOption)
 
     if (options.o == null) {
       console.log(JSON.stringify(result))
       return
     }
-    await _posenet.out_image(args.image,options.o,result)
+    await _posenet.out_image(args.inFilePath,options.o,result)
   })
   .command('blazeface', 'Using blazeface')
   .argument('<in-file-path>', 'input image file\nSupport for JPG,PNG,BMP')
-  .option('-o <outputImagePath>','output to jpeg')
+  .option('-o <out-file-path>','output to jpeg')
   .action(async function(args, options, logger) {
 
-    let result = await _blazeface.run(args.image)
+    let result = await _blazeface.run(args.inFilePath)
     if (options.o == null) {
       console.log(JSON.stringify(result))
       return
     }
-    await _blazeface.out_image(args.image,options.o,result)
+    await _blazeface.out_image(args.inFilePath,options.o,result)
   })
   .command('save', 'Download pre-trained moeles to local file')
   .argument('<model-name>', `pre-trained model name \n:[ ${['all',...supports].toString()} ]`,['all',...supports])

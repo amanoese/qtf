@@ -7,16 +7,17 @@ const PImage = require('pureimage');
 const { img_to_t3d } = require('./utils');
 
 let load_posenet = async (LoadOption = {}) => {
-  let err = await fsp.access('./models/posenet/model.json')
-  if(!err) {
+  try {
+    await fsp.access('./models/posenet/model.json')
     console.warn('[QTF] Using local model');
 
     return await posenet.load({
       modelUrl:'file://./models/posenet/model.json',
       ...LoadOption
     });
+  } catch (err) {
+    return await posenet.load({ ...LoadOption });
   }
-  return await posenet.load({ ...LoadOption });
 }
 
 async function save_model () {

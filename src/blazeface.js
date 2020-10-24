@@ -7,8 +7,8 @@ const PImage = require('pureimage');
 const { img_to_t3d } = require('./utils');
 
 let load_model = async (LoadOption = {}) => {
-  let err = await fsp.access('./models/blazeface/model.json')
-  if(!err) {
+  try {
+    await fsp.access('./models/blazeface/model.json')
     // '@tensorflow-models/blazeface' is not support modelurl option.
     // https://github.com/tensorflow/tfjs-models/pull/534
     // https://github.com/tensorflow/tfjs-models/blob/master/blazeface/src/index.ts#L36-L50
@@ -27,8 +27,9 @@ let load_model = async (LoadOption = {}) => {
       tfmodel,
       inputWidth, inputHeight, maxFaces, iouThreshold, scoreThreshold
     );
+  } catch (err) {
+    return await blazeface.load(LoadOption);
   }
-  return await blazeface.load(LoadOption);
 }
 
 async function run(imagePath) {

@@ -4,4 +4,3 @@ models/
 dist/
 !dist/.gitkeep
 *.jpg
-*.tif
