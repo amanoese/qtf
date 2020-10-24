@@ -2,7 +2,8 @@ Quick Tensorflow.js on CLI
 ---
 ![Node CI](https://github.com/amanoese/qtf/workflows/Node%20CI/badge.svg)
 
-This is the command to use the TensorFlow.js pre-trained moeles with cli.
+This is the command to use the TensorFlow.js pre-trained models of  [tfjs-models](https://github.com/tensorflow/tfjs-models) with cli.  
+If you want to use more features, I recommend using [tfjs-models](https://github.com/tensorflow/tfjs-models).
 
 is not Qtransformers.
 
