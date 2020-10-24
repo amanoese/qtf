@@ -1,9 +1,12 @@
 const util = require('util');
-const exec = util.promisify(require('child_process').exec);
+const rewire = require('rewire')
 const tempy = require('tempy');
+
+const exec = util.promisify(require('child_process').exec);
 const fsp = require('fs').promises;
 
 const qtf_posenet = require('../src/qtf-posenet.js')
+const _qtf_posenet = rewire('../src/qtf-posenet.js')
 
 const test_img = '__tests__/lena.jpg'
 
@@ -15,7 +18,9 @@ describe('posenet by gcp remote model',()=>{
   })
 
   test('load',async ()=>{
-    let model = await qtf_posenet.load_model()
+
+    let model = await _qtf_posenet.__get__('load_model')()
+
     expect(model)
       .toHaveProperty(
         'baseModel.model.modelUrl',
@@ -24,9 +29,11 @@ describe('posenet by gcp remote model',()=>{
   })
 
   test('save_model',async ()=>{
+
     await qtf_posenet.save_model()
 
-    let model = await qtf_posenet.load_model()
+    let model = await _qtf_posenet.__get__('load_model')()
+
     expect(model)
       .toHaveProperty(
         'baseModel.model.modelUrl',
@@ -37,7 +44,7 @@ describe('posenet by gcp remote model',()=>{
 
 describe('posenet by local model',()=>{
 
-  test('run',async ()=>{
+  test.concurrent('run',async ()=>{
     let result = await qtf_posenet.run('__tests__/lena.jpg')
 
     expect(result)
@@ -55,7 +62,7 @@ describe('posenet by local model',()=>{
       .toBeGreaterThanOrEqual(0.9);
   })
 
-  test('out_image',async ()=>{
+  test.concurrent('out_image',async ()=>{
     let result = await qtf_posenet.run(test_img)
     let out_img = tempy.file({extension:'jpg'})
 
