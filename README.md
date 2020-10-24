@@ -48,12 +48,12 @@ $ qtf posenet input.jpg
 
 Output image file.
 ```bash
-$ qtf posenet input.jpg -o ouput.jpg
+$ qtf blazeface input.jpg -o ouput.jpg
 ```
 
 Output JSON.
 ```bash
-$ qtf posenet input.jpg
+$ qtf blazeface input.jpg
 ```
 
 ## Develop
@@ -80,7 +80,7 @@ $ act push
   - Coco SSD
   - BodyPix
   - DeepLab v3
-  - hanpose
+  - handpose
   - facemesh
 - Input Stream of UVC device.
 
