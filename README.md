@@ -53,12 +53,18 @@ Output JSON.
 $ qtf posenet input.jpg
 ```
 
-## Deeplab
+## Develop
 
 ```bash
 $ npm install
 $ npm link
 $ qtf --help
+```
+### CI on Local
+
+```bash
+$ act -n
+$ act push
 ```
 
 ### On the roadmap, but still missing
