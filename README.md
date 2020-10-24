@@ -1,5 +1,7 @@
 Quick Tensorflow.js on CLI
 ---
+![Node CI](https://github.com/amanoese/qtf/workflows/Node%20CI/badge.svg)
+
 This is the command to use the TensorFlow.js pre-trained moeles with cli.
 
 is not Qtransformers.
