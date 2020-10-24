@@ -1,3 +1,10 @@
 node_modules/
-test_img/
+
+models/*
+dist/*
+!.gitkeep
+
+*.tif
 *.jpg
+
+!__tests__/lena.jpg
