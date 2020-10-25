@@ -76,7 +76,13 @@ $ qtf blazeface input.jpg
 ### mobilenet
 
 ```bash
-$ qtf mobilenet --help
+$ qtf mobilenet input.jpg
+```
+
+### other models
+
+```bash
+$ qtf --help
 ```
 
 ### save
