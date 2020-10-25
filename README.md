@@ -9,16 +9,45 @@ If you want to use more features, I recommend using [tfjs-models](https://github
 
 is not Qtransformers.
 
+## Install
+
+If you using node.js on nodebrew ...
+
+```bash
+$ npm i -g qtf
+```
+
+### Manual
+
+```bash
+$ cd '<your any directory>'
+
+$ git clone https://github.com/amanoese/gtf.git
+$ cd qtf
+$ npm install
+$ npm link
+
+## if you can not run 'npm link'.
+$ echo "alias=$PWD/src/index.js" >> ~/.bashrc
+$ source ~/.bashrc
+```
+
+### Windows
+
+not support.
+If you are using WSL2. See 'Maual Install'.
+
 ## Usage
 
 ```bash
-$ qtf posenet input.jpg -o output.jpg
+$ qtf blazeface input.jpg -o output.jpg
 ```
+
 Let's open the output.jpg
 
 ### save
 
-This command uses a trained model on the internet (Google Cloud Starage).
+This command uses a trained model on the internet (Google Cloud Starage)..
 If use offline or you use the command several times.
 It's good idea to download trained model file to local.
 
