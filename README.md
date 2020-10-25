@@ -45,7 +45,7 @@ $ qtf posenet input.jpg -o output.jpg
 
 Let's open the output.jpg
 
-| input | output |
+| input.jpg | output.jpg |
 | --- | --- |
 | ![](https://raw.githubusercontent.com/amanoese/qtf/docs/doc/me.jpg) | ![](https://raw.githubusercontent.com/amanoese/qtf/docs/doc/me-posenet.jpg) |
 
