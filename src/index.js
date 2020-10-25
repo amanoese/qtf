@@ -7,8 +7,9 @@ process.env['TF_CPP_MIN_LOG_LEVEL'] = '2' //avoid tf message
 
 const _posenet = require('./qtf-posenet.js')
 const _blazeface = require('./qtf-blazeface.js')
+const _mobilenet = require('./qtf-mobilenet.js')
 
-const supports = ['posenet','blazeface']
+const supports = ['posenet','blazeface','mobilenet']
 
 program
   .name('qtf')
@@ -48,10 +49,19 @@ program
     }
     await _blazeface.out_image(args.inFilePath,options.o,result)
   })
+  .command('mobilenet', 'Using mobilenet')
+  .argument(
+    '<in-file-path>',
+    'input image file\nSupport for JPG,PNG,BMP'
+   )
+  .action(async function({args, options, logger}) {
+    let result = await _mobilenet.run(args.inFilePath)
+    console.log(JSON.stringify(result))
+  })
   .command('save', 'Download pre-trained moeles to local file')
   .argument(
      '<model-name>',
-     `pre-trained model name \n:[ ${['all',...supports].toString()} ]`,
+     `pre-trained model name`,
      { validator : ['all',...supports] }
    )
   .action(async function({args, options, logger}) {
@@ -60,6 +70,9 @@ program
     }
     if(/^(blazeface|all)$/.test(args.modelName)) {
       _blazeface.save_model();
+    }
+    if(/^(mobilenet|all)$/.test(args.modelName)) {
+      _mobilenet.save_model();
     }
   });
 
