@@ -87,6 +87,12 @@ Output JSON.
 $ qtf blazeface input.jpg
 ```
 
+### mobilenet
+
+```bash
+$ qtf mobilenet --help
+```
+
 ## Develop
 
 ```bash
@@ -104,7 +110,6 @@ $ act push
 ## On the roadmap, but still missing
 
 - Support tfjs-models
-  - MobileNet
   - PoseNet
     - Support ResNet50
     - different model stride 
