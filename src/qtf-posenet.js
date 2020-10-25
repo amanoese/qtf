@@ -50,6 +50,7 @@ async function out_image (imagePath,outPath = './out.jpg',result = {}) {
       0, 0, pimg.width, pimg.height, // destination dimensions
   );
 
+  const point_size = (pimg.width / 50)
   ctx.fillStyle = '#00ff00';
 
   result.keypoints.filter(({score})=>{
@@ -58,7 +59,7 @@ async function out_image (imagePath,outPath = './out.jpg',result = {}) {
   }).forEach(point => {
     let { position : { x, y } } = point
     ctx.beginPath();
-    ctx.arc(x,y,10,0, Math.PI*2);
+    ctx.arc(x,y,point_size,0, Math.PI*2);
     ctx.closePath();
     ctx.fill()
   })

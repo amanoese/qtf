@@ -69,11 +69,13 @@ async function out_image (imagePath,outPath = './out.jpg',result = {}) {
     ctx.fillStyle = 'rgba(255,0,0, 0.5)';
     ctx.fillRect( x1, y1, width, height);
 
+    const point_size = (pimg.width / 50)
     ctx.fillStyle = '#0000ff';
+
     face.landmarks.forEach(point => {
       let [ x, y ] = point
       ctx.beginPath();
-      ctx.arc(x,y,5,0, Math.PI*2);
+      ctx.arc(x,y,point_size,0, Math.PI*2);
       ctx.closePath();
       ctx.fill()
     })
