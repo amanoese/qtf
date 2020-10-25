@@ -40,28 +40,14 @@ If you are using WSL2. See 'Maual Install'.
 ## Usage
 
 ```bash
-$ qtf blazeface input.jpg -o output.jpg
+$ qtf posenet input.jpg -o output.jpg
 ```
 
 Let's open the output.jpg
 
-### save
-
-This command uses a trained model on the internet (Google Cloud Starage)..
-If use offline or you use the command several times.
-It's good idea to download trained model file to local.
-
-```bash
-$ qtf save all
-```
-
-But trained model data want to diskspace.
-you can also choose the model to download.
-See below for details.
-
-```bash
-$ qtf save --help
-```
+| input.jpg | output.jpg |
+| --- | --- |
+| ![](https://raw.githubusercontent.com/amanoese/qtf/docs/doc/me.jpg) | ![](https://raw.githubusercontent.com/amanoese/qtf/docs/doc/me-posenet.jpg) |
 
 ### posenet
 
@@ -87,6 +73,36 @@ Output JSON.
 $ qtf blazeface input.jpg
 ```
 
+### mobilenet
+
+```bash
+$ qtf mobilenet input.jpg
+```
+
+### other models
+
+```bash
+$ qtf --help
+```
+
+### save
+
+This command uses a trained model on the internet (Google Cloud Starage)..
+If use offline or you use the command several times.
+It's good idea to download trained model file to local.
+
+```bash
+$ qtf save all
+```
+
+But trained model data want to diskspace.
+you can also choose the model to download.
+See below for details.
+
+```bash
+$ qtf save --help
+```
+
 ## Develop
 
 ```bash
@@ -104,7 +120,6 @@ $ act push
 ## On the roadmap, but still missing
 
 - Support tfjs-models
-  - MobileNet
   - PoseNet
     - Support ResNet50
     - different model stride 
