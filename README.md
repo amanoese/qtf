@@ -45,6 +45,10 @@ $ qtf blazeface input.jpg -o output.jpg
 
 Let's open the output.jpg
 
+| input | output |
+| --- | --- |
+| ![](https://raw.githubusercontent.com/amanoese/qtf/docs/doc/me.jpg) | ![](https://raw.githubusercontent.com/amanoese/qtf/docs/doc/me-posenet.jpg) |
+
 ### save
 
 This command uses a trained model on the internet (Google Cloud Starage)..
