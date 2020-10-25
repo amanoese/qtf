@@ -7,7 +7,7 @@ Quick Tensorflow.js on CLI
 This is the command to use the TensorFlow.js pre-trained models of  [tfjs-models](https://github.com/tensorflow/tfjs-models) with cli.  
 If you want to use more features, I recommend using [tfjs-models](https://github.com/tensorflow/tfjs-models).
 
-is not Qtransformers.
+qtf is not Qtransformers.
 
 ## Install
 
