@@ -6,5 +6,6 @@ dist/*
 
 *.tif
 *.jpg
+!doc/*.jpg
 
 !__tests__/lena.jpg
