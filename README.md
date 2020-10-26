@@ -4,7 +4,7 @@ Quick Tensorflow.js on CLI
 [![npm](https://img.shields.io/npm/v/qtf)](https://www.npmjs.com/package/qtf)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-This is the command that makes it easy on cli to take advantage of TensorFlow.js pre-trained models in [tfjs-models](https://github.com/tensorflow/tfjs-models).
+This is the command that makes it easy on cli to take advantage of TensorFlow.js pre-trained models in [tfjs-models](https://github.com/tensorflow/tfjs-models).  
 If you want to use more features, I recommend using [tfjs-models](https://github.com/tensorflow/tfjs-models).
 
 qtf is not Qtransformers.
@@ -57,16 +57,19 @@ $ qtf posenet input.jpg -o output.jpg
 | ![](https://raw.githubusercontent.com/amanoese/qtf/docs/doc/me.jpg) | ![](https://raw.githubusercontent.com/amanoese/qtf/docs/doc/me-posenet.jpg) |
 
 
-### other models
+### Support models
 
 Supports the following model now.
  - posenet
  - blazeface
  - mobilenet
 
+
 ```bash
+## check support model.
 $ qtf --help
 ```
+
 ### save
 
 This command uses a trained model on the internet (Google Cloud Starage)..
