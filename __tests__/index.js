@@ -33,4 +33,11 @@ describe('',()=>{
       JSON.parse(stdout.toString())
     }).not.toThrow();
   })
+  test('body-pix',async ()=>{
+    let { stdout } = await exec(`${qtf_cmd} body-pix ${test_img}`)
+
+    expect(() => {
+      JSON.parse(stdout.toString())
+    }).not.toThrow();
+  })
 })

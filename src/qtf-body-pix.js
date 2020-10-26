@@ -14,7 +14,7 @@ let load_model = async (loadOption = {}) => {
 
     return await bodyPix.load({
       modelUrl:'file://./models/body-pix/model.json',
-      ...LoadOption
+      ...loadOption
     });
   } catch (err) {
     return  await bodyPix.load(loadOption);

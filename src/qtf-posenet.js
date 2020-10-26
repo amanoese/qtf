@@ -13,10 +13,10 @@ let load_model = async (loadOption = {}) => {
 
     return await posenet.load({
       modelUrl:'file://./models/posenet/model.json',
-      ...LoadOption
+      ...loadOption
     });
   } catch (err) {
-    return await posenet.load({ ...LoadOption });
+    return await posenet.load({ ...loadOption });
   }
 }
 

@@ -42,7 +42,7 @@ describe('posenet by gcp remote model',()=>{
 
 describe('posenet by local model',()=>{
 
-  test.concurrent('run',async ()=>{
+  test('run',async ()=>{
     let result = await qtf_posenet.run('__tests__/lena.jpg')
 
     expect(result)
@@ -60,7 +60,7 @@ describe('posenet by local model',()=>{
       .toBeGreaterThanOrEqual(0.9);
   })
 
-  test.concurrent('out_image',async ()=>{
+  test('out_image',async ()=>{
     let result = await qtf_posenet.run(test_img)
     let out_img = tempy.file({extension:'jpg'})
 
