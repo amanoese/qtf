@@ -43,7 +43,7 @@ describe('blazeface by gcp remote model',()=>{
 
 describe('blazeface by local model',()=>{
 
-  test.concurrent('run',async ()=>{
+  test('run',async ()=>{
     let result = await qtf_blazeface.run('__tests__/lena.jpg')
 
     expect(result)
@@ -59,7 +59,7 @@ describe('blazeface by local model',()=>{
       .toBeLessThanOrEqual(275);
   })
 
-  test.concurrent('out_image',async ()=>{
+  test('out_image',async ()=>{
     let result = await qtf_blazeface.run(test_img)
     let out_img = tempy.file({extension:'jpg'})
 

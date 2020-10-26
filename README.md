@@ -4,7 +4,7 @@ Quick Tensorflow.js on CLI
 [![npm](https://img.shields.io/npm/v/qtf)](https://www.npmjs.com/package/qtf)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-This is the command to use the TensorFlow.js pre-trained models of  [tfjs-models](https://github.com/tensorflow/tfjs-models) with cli.  
+This is the command that makes it easy on cli to take advantage of TensorFlow.js pre-trained models in [tfjs-models](https://github.com/tensorflow/tfjs-models).  
 If you want to use more features, I recommend using [tfjs-models](https://github.com/tensorflow/tfjs-models).
 
 qtf is not Qtransformers.
@@ -39,49 +39,36 @@ If you are using WSL2. See 'Maual Install'.
 
 ## Usage
 
+Output JSON.
+
+```bash
+$ qtf posenet input.jpg
+{"score":0.9647475901771995,"keypoints":[{"score":0.998931884765625,"part":"nose","position":{"x":107.73031675583658,"y":53.548239147616734}},{"score":0.9975152611732483,"part":"leftEye","position":{"x":111.77570221303502,"y":47.67420431055447}},{"score":0.998687207698822,"part":"rightEye","position":{"x":103.54239877188716,"y":47.98000136794747}},{"score":0.9890928268432617,"part":"leftEar","position":{"x":122.54736138132296,"y":44.82373616853113}},{"score":0.5303822755813599,"part":"rightEar","position":{"x":99.82809460116732,"y":49.01344008390078}},{"score":0.9975290298461914,"part":"leftShoulder","position":{"x":134.81771339980546,"y":63.107547270184824}},{"score":0.9952900409698486,"part":"rightShoulder","position":{"x":100.9243829036965,"y":65.03463187013618}},{"score":0.9982808828353882,"part":"leftElbow","position":{"x":149.92353173638134,"y":95.12142813715954}},{"score":0.9930793046951294,"part":"rightElbow","position":{"x":86.52606699902724,"y":92.96833201605058}},{"score":0.997657299041748,"part":"leftWrist","position":{"x":144.95117947470817,"y":124.01598218628405}},{"score":0.9944704174995422,"part":"rightWrist","position":{"x":71.984375,"y":114.08531432392996}},{"score":0.9985787868499756,"part":"leftHip","position":{"x":130.9595695525292,"y":125.98659411478599}},{"score":0.9968750476837158,"part":"rightHip","position":{"x":110.72067272616732,"y":122.94964433365759}},{"score":0.9941878318786621,"part":"leftKnee","position":{"x":124.67179140321012,"y":173.04322714007782}},{"score":0.9907618165016174,"part":"rightKnee","position":{"x":90.9666904790856,"y":168.4438837548638}},{"score":0.9824202060699463,"part":"leftAnkle","position":{"x":128.6217017266537,"y":214.41898711089493}},{"score":0.9469689130783081,"part":"rightAnkle","position":{"x":105.84379559824903,"y":207.76614178015564}}]}
+```
+
+Output image file.
+
 ```bash
 $ qtf posenet input.jpg -o output.jpg
 ```
-
-Let's open the output.jpg
 
 | input.jpg | output.jpg |
 | --- | --- |
 | ![](https://raw.githubusercontent.com/amanoese/qtf/docs/doc/me.jpg) | ![](https://raw.githubusercontent.com/amanoese/qtf/docs/doc/me-posenet.jpg) |
 
-### posenet
 
-Output image file.
-```bash
-$ qtf posenet input.jpg -o ouput.jpg
-```
+### Support models
 
-Output JSON.
-```bash
-$ qtf posenet input.jpg
-```
+Supports the following model now.
+  - posenet
+  - blazeface
+  - mobilenet
+  - BodyPix
+    - segmentPerson
 
-### blazeface
-
-Output image file.
-```bash
-$ qtf blazeface input.jpg -o ouput.jpg
-```
-
-Output JSON.
-```bash
-$ qtf blazeface input.jpg
-```
-
-### mobilenet
 
 ```bash
-$ qtf mobilenet input.jpg
-```
-
-### other models
-
-```bash
+## check support model.
 $ qtf --help
 ```
 
@@ -125,6 +112,7 @@ $ act push
     - different model stride 
   - Coco SSD
   - BodyPix
+    - segmentPersonParts
   - DeepLab v3
   - handpose
   - facemesh
