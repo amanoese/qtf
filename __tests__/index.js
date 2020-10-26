@@ -1,7 +1,9 @@
 const appRoot = `${__dirname}/..`
 const qtf_cmd = `${appRoot}/src/index.js`
+const tempy = require('tempy');
 
 const fs   = require('fs');
+const fsp = require('fs').promises;
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 
@@ -34,10 +36,12 @@ describe('',()=>{
     }).not.toThrow();
   })
   test('body-pix',async ()=>{
-    let { stdout } = await exec(`${qtf_cmd} body-pix ${test_img}`)
+    let out_img = tempy.file({extension:'jpg'})
 
-    expect(() => {
-      JSON.parse(stdout.toString())
-    }).not.toThrow();
+    await expect(fsp.access(out_img)).rejects.toThrow()
+
+    await exec(`${qtf_cmd} body-pix ${test_img} -o ${out_img}`)
+
+    await expect(fsp.access(out_img)).resolves.toBeUndefined()
   })
 })
