@@ -8,8 +8,9 @@ process.env['TF_CPP_MIN_LOG_LEVEL'] = '2' //avoid tf message
 const _posenet = require('./qtf-posenet.js')
 const _blazeface = require('./qtf-blazeface.js')
 const _mobilenet = require('./qtf-mobilenet.js')
+const _bodyPix = require('./qtf-body-pix.js')
 
-const supports = ['posenet','blazeface','mobilenet']
+const supports = ['posenet','blazeface','mobilenet','body-pix']
 
 program
   .name('qtf')
@@ -58,6 +59,31 @@ program
     let result = await _mobilenet.run(args.inFilePath)
     console.log(JSON.stringify(result))
   })
+  .command('body-pix', 'Using body-pix')
+  .argument(
+    '<in-file-path>',
+    'input image file\nSupport for JPG,PNG,BMP'
+   )
+  .option(
+    '-a <raw-array>',
+    'Does not convert the output JSON\'s Uinit8Array to an Array.'
+   )
+  .option('-o <out-file-path>','output to jpeg', { required :false })
+  .action(async function({args, options, logger}) {
+    let result = await _bodyPix.run(args.inFilePath)
+
+    if(options.a == null) {
+      result = {
+        ...result,
+        data: Array.from(result.data)
+      };
+    }
+    if(options.o == null) {
+      console.log(JSON.stringify(result))
+      return
+    }
+    await _bodyPix.out_image(args.inFilePath,options.o,result)
+  })
   .command('save', 'Download pre-trained moeles to local file')
   .argument(
      '<model-name>',
@@ -73,6 +99,9 @@ program
     }
     if(/^(mobilenet|all)$/.test(args.modelName)) {
       _mobilenet.save_model();
+    }
+    if(/^(body-pix|all)$/.test(args.modelName)) {
+      _bodyPix.save_model();
     }
   });
 

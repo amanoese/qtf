@@ -2,29 +2,29 @@ const fs = require('fs');
 const fsp = require('fs').promises;
 const tf = require('@tensorflow/tfjs-node');
 //const tf = require('@tensorflow/tfjs-node-gpu');
-const posenet = require('@tensorflow-models/posenet');
+const bodyPix = require('@tensorflow-models/body-pix');
 const PImage = require('pureimage');
 const { img_to_t3d } = require('./utils.js');
 
+
 let load_model = async (loadOption = {}) => {
   try {
-    await fsp.access('./models/posenet/model.json')
+    await fsp.access('./models/body-pix/model.json')
     console.warn('[QTF] Using local model');
 
-    return await posenet.load({
-      modelUrl:'file://./models/posenet/model.json',
+    return await bodyPix.load({
+      modelUrl:'file://./models/body-pix/model.json',
       ...LoadOption
     });
   } catch (err) {
-    return await posenet.load({ ...LoadOption });
+    return  await bodyPix.load(loadOption);
   }
 }
 
 async function save_model () {
-  //TODO: Not enough because posenet is multiple models.
-  let net = await posenet.load()
-  await net.baseModel.model.save('file://./models/posenet')
-  console.log('save posenet!')
+  let net = await bodyPix.load();
+  await net.baseModel.model.save('file://./models/body-pix')
+  console.log('save body-pix!')
 }
 
 async function run (imagePath,loadOption) {
@@ -33,8 +33,8 @@ async function run (imagePath,loadOption) {
     await img_to_t3d(imagePath)
   ]);
 
-  const pose = await net.estimateSinglePose(img_Tensor3D);
-  return pose
+  const segmentation = await net.segmentPerson(img_Tensor3D);
+  return segmentation
 }
 
 async function out_image (imagePath,outPath = './out.jpg',result = {}) {
@@ -44,34 +44,43 @@ async function out_image (imagePath,outPath = './out.jpg',result = {}) {
   //console.log('size is',pimg.width,pimg.height);
   const img2 = PImage.make(pimg.width,pimg.height);
 
-  var ctx = img2.getContext('2d');
+  const ctx = img2.getContext('2d');
   ctx.drawImage(pimg,
       0, 0, pimg.width, pimg.height, // source dimensions
       0, 0, pimg.width, pimg.height, // destination dimensions
   );
 
-  const point_size = (pimg.width / 50)
-  ctx.fillStyle = '#00ff00';
+  result.data.forEach((param,index)=>{
+    let x = index % pimg.width
+    let y = parseInt(index / pimg.width)
 
-  result.keypoints.filter(({score})=>{
-    //console.log({score,x,y})
-    return score > 0.5
-  }).forEach(point => {
-    let { position : { x, y } } = point
-    ctx.beginPath();
-    ctx.arc(x,y,point_size,0, Math.PI*2);
-    ctx.closePath();
-    ctx.fill()
+    ctx.fillStyle = param ? 'rgba(255,255,255, 0.5)' : 'rgba(0,0,0, 0.5)'
+    ctx.fillRect(x,y,1,1);
   })
+
+  //const point_size = (pimg.width / 50)
+  //ctx.fillStyle = 'rgba(0,255,0,0.7)';
+
+  //result.allPoses.forEach(pose => {
+  //  pose.keypoints.filter(({score})=>{
+  //    //console.log({score,x,y})
+  //    return score > 0.5
+  //  }).forEach(point => {
+  //    let { position : { x, y } } = point
+  //    ctx.beginPath();
+  //    ctx.arc(x,y,point_size,0, Math.PI*2);
+  //    ctx.closePath();
+  //    ctx.fill()
+  //  })
+  //})
 
   await PImage.encodeJPEGToStream(img2,fs.createWriteStream(outPath), 100);
   //console.log(`done writing To "${outPath}"`);
 }
 
 module.exports = {
-  //load_model,
   save_model,
   run,
-  out_image
+  out_image,
 }
 

@@ -60,9 +60,11 @@ $ qtf posenet input.jpg -o output.jpg
 ### Support models
 
 Supports the following model now.
- - posenet
- - blazeface
- - mobilenet
+  - posenet
+  - blazeface
+  - mobilenet
+  - BodyPix
+    - segmentPerson
 
 
 ```bash
@@ -110,6 +112,7 @@ $ act push
     - different model stride 
   - Coco SSD
   - BodyPix
+    - segmentPersonParts
   - DeepLab v3
   - handpose
   - facemesh
