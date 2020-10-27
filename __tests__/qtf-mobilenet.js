@@ -40,7 +40,7 @@ describe('mobilenet by gcp remote model',()=>{
   })
 })
 
-describe('blazeface by local model',()=>{
+describe('mobilenet by local model',()=>{
   test.concurrent('run',async ()=>{
     let result = await qtf_mobilenet.run('__tests__/lena.jpg')
     expect(result).toHaveProperty('length',3)

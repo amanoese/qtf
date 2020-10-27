@@ -9,6 +9,7 @@ const _posenet = require('./qtf-posenet.js')
 const _blazeface = require('./qtf-blazeface.js')
 const _mobilenet = require('./qtf-mobilenet.js')
 const _bodyPix = require('./qtf-body-pix.js')
+const _deeplab = require('./qtf-deeplab.js')
 
 const supports = ['posenet','blazeface','mobilenet','body-pix']
 
@@ -83,6 +84,16 @@ program
       return
     }
     await _bodyPix.out_image(args.inFilePath,options.o,result)
+  })
+  .command('deeplab', 'Using DeepLab V3')
+  .argument(
+    '<in-file-path>',
+    'input image file\nSupport for JPG,PNG,BMP'
+   )
+  //.option('-o <out-file-path>','output to jpeg', { required :false })
+  .action(async function({args, options, logger}) {
+    let result = await _deeplab.run(args.inFilePath)
+    console.log(JSON.stringify(result))
   })
   .command('save', 'Download pre-trained moeles to local file')
   .argument(
