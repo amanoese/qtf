@@ -6,7 +6,7 @@ const blazeface = require('@tensorflow-models/blazeface');
 const PImage = require('pureimage');
 const { img_to_t3d } = require('./utils.js');
 
-let load_model = async (LoadOption = {}) => {
+let load_model = async (loadOption = {}) => {
   try {
     await fsp.access('./models/blazeface/model.json')
     // '@tensorflow-models/blazeface' is not support modelurl option.
@@ -19,7 +19,7 @@ let load_model = async (LoadOption = {}) => {
       inputHeight = 128,
       iouThreshold = 0.3,
       scoreThreshold = 0.75
-    } = { ...LoadOption }
+    } = { ...loadOption }
 
     console.warn('[QTF] Using local model');
     let tfmodel = await tf.loadGraphModel('file://./models/blazeface/model.json');
@@ -28,12 +28,13 @@ let load_model = async (LoadOption = {}) => {
       inputWidth, inputHeight, maxFaces, iouThreshold, scoreThreshold
     );
   } catch (err) {
-    return await blazeface.load(LoadOption);
+    return await blazeface.load(loadOption);
   }
 }
 
 async function run(imagePath) {
-  let model = await load_model()
+
+  let model = await load_model();
   let img_Tensor3D = await img_to_t3d(imagePath)
 
   const predictions = await model.estimateFaces(img_Tensor3D);

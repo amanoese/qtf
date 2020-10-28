@@ -7,16 +7,22 @@ const PImage = require('pureimage');
 const { img_to_t3d } = require('./utils.js');
 
 let load_model = async (loadOption = {}) => {
+  let option = {
+    architecture = 'MobileNetV1',
+    outputStride = 16,
+    multiplier   = 1
+  } = { ...loadOption };
+
   try {
     await fsp.access('./models/posenet/model.json')
     console.warn('[QTF] Using local model');
 
     return await posenet.load({
       modelUrl:'file://./models/posenet/model.json',
-      ...loadOption
+      ...option
     });
   } catch (err) {
-    return await posenet.load({ ...loadOption });
+    return await posenet.load(option);
   }
 }
 
@@ -27,9 +33,15 @@ async function save_model () {
   console.log('save posenet!')
 }
 
-async function run (imagePath,loadOption) {
+async function run (imagePath,loadOption = {}) {
+
+  let pimg = await PImage.decodeJPEGFromStream(fs.createReadStream(imagePath))
+
   const [ net, img_Tensor3D ] = await Promise.all([
-    await load_model(loadOption),
+    await load_model({
+      inputResolution:{ width:pimg.width, height:pimg.height },
+      ...loadOption,
+    }),
     await img_to_t3d(imagePath)
   ]);
 
@@ -50,14 +62,16 @@ async function out_image (imagePath,outPath = './out.jpg',result = {}) {
       0, 0, pimg.width, pimg.height, // destination dimensions
   );
 
-  const point_size = (pimg.width / 50)
+  const point_size = Math.max((pimg.width / 200).toFixed(),5)
   ctx.fillStyle = '#00ff00';
 
   result.keypoints.filter(({score})=>{
     //console.log({score,x,y})
     return score > 0.5
   }).forEach(point => {
-    let { position : { x, y } } = point
+    let x = point.position.x
+    let y = point.position.y
+
     ctx.beginPath();
     ctx.arc(x,y,point_size,0, Math.PI*2);
     ctx.closePath();
