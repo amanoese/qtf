@@ -90,10 +90,25 @@ program
     '<in-file-path>',
     'input image file\nSupport for JPG,PNG,BMP'
    )
-  //.option('-o <out-file-path>','output to jpeg', { required :false })
+  .option(
+    '-a <raw-array>',
+    'Does not convert the output JSON\'s Uinit8Array to an Array.'
+   )
+  .option('-o <out-file-path>','output to jpeg', { required :false })
   .action(async function({args, options, logger}) {
     let result = await _deeplab.run(args.inFilePath)
-    console.log(JSON.stringify(result))
+
+    if(options.a == null) {
+      result = {
+        ...result,
+        data: Array.from(result.segmentationMap)
+      };
+    }
+    if(options.o == null) {
+      console.log(JSON.stringify(result))
+      return
+    }
+    await _deeplab.out_image(args.inFilePath,options.o,result)
   })
   .command('save', 'Download pre-trained moeles to local file')
   .argument(
