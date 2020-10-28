@@ -80,8 +80,8 @@ Supports the following model now.
   - posenet
   - mobilenet
   - blazeface
-  - BodyPix (only segmentPerson)
-  - deeplab
+  - BodyPix (Person segmentation)
+  - DeepLab v3
 
 ```bash
 ## check support model.
@@ -101,11 +101,15 @@ Output is JSON only.
 
 ### BodyPix
 
+#### Person segmentation
 | input.jpg | output.jpg |
 | --- | --- |
 | ![](https://raw.githubusercontent.com/amanoese/qtf/docs/doc/me.jpg) | ![](https://raw.githubusercontent.com/amanoese/qtf/docs/doc/me-body-pix.jpg) |
 
-### deeplab
+#### Person body part segmentation
+ TBD
+
+### DeepLab v3
 
 If you not set loadOption. output size fixed 512x512.
 
