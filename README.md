@@ -142,7 +142,6 @@ $ act push
   - Coco SSD
   - BodyPix
     - segmentPersonParts
-  - DeepLab v3
   - handpose
   - facemesh
 - Input Stream of UVC device.
