@@ -8,8 +8,27 @@ const { img_to_t3d } = require('./utils.js');
 const deeplab = require('@tensorflow-models/deeplab');
 const utils = require('@tensorflow-models/deeplab/dist/utils');
 
-let load_model = async (LoadOption = {}) => {
-  return await deeplab.load()
+let load_model = async (loadOption = {}) => {
+  try {
+    await fsp.access('./models/deeplab/model.json')
+    console.warn('[QTF] Using local model');
+
+    return await deeplab.load({
+      base: 'pascal',
+      quantizationBytes: 2,
+      modelUrl:'file://./models/deeplab/model.json',
+      ...loadOption
+    });
+  } catch (err) {
+    console.error(err)
+    return await deeplab.load()
+  }
+}
+
+async function save_model () {
+  let _model = await deeplab.load()
+  await _model.model.save('file://./models/deeplab')
+  console.log('save deeplab!')
 }
 
 async function run (imagePath,LoadOption) {
@@ -49,7 +68,7 @@ async function out_image (imagePath,outPath = './out.jpg',predictions) {
   );
 
   const tf_data = await tf.reshape(
-    Array.from(predictions.data)
+    Array.from(predictions.segmentationMap)
     ,[-1,predictions.width,4]
   );
 
@@ -70,6 +89,7 @@ async function out_image (imagePath,outPath = './out.jpg',predictions) {
 }
 
 module.exports = {
+  save_model,
   run,
   out_image,
 }
