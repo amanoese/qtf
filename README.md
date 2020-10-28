@@ -56,22 +56,6 @@ $ qtf posenet input.jpg -o output.jpg
 | --- | --- |
 | ![](https://raw.githubusercontent.com/amanoese/qtf/docs/doc/me.jpg) | ![](https://raw.githubusercontent.com/amanoese/qtf/docs/doc/me-posenet.jpg) |
 
-
-### Support models
-
-Supports the following model now.
-  - posenet
-  - blazeface
-  - mobilenet
-  - BodyPix
-    - segmentPerson
-
-
-```bash
-## check support model.
-$ qtf --help
-```
-
 ### save
 
 This command uses a trained model on the internet (Google Cloud Starage)..
@@ -89,6 +73,51 @@ See below for details.
 ```bash
 $ qtf save --help
 ```
+
+## Support models
+
+Supports the following model now.
+  - posenet
+  - mobilenet
+  - blazeface
+  - BodyPix (Person segmentation)
+  - DeepLab v3
+
+```bash
+## check support model.
+$ qtf --help
+```
+### posenet
+See Usage.
+
+### mobilenet
+Output is JSON only.
+
+### blazeface
+
+| input.jpg | output.jpg |
+| --- | --- |
+| ![](https://raw.githubusercontent.com/amanoese/qtf/docs/doc/me.jpg) | ![](https://raw.githubusercontent.com/amanoese/qtf/docs/doc/me-blazeface.jpg) |
+
+### BodyPix
+
+#### Person segmentation
+| input.jpg | output.jpg |
+| --- | --- |
+| ![](https://raw.githubusercontent.com/amanoese/qtf/docs/doc/me.jpg) | ![](https://raw.githubusercontent.com/amanoese/qtf/docs/doc/me-body-pix.jpg) |
+
+#### Person body part segmentation
+ TBD
+
+### DeepLab v3
+
+If you not set loadOption. output size fixed 512x512.
+
+| input.jpg | output.jpg |
+| --- | --- |
+| ![](https://raw.githubusercontent.com/amanoese/qtf/docs/doc/me.jpg) | <img src="https://raw.githubusercontent.com/amanoese/qtf/docs/doc/me-deeplab.jpg" width="256" height="256" /> |
+
+
 
 ## Develop
 
@@ -113,7 +142,6 @@ $ act push
   - Coco SSD
   - BodyPix
     - segmentPersonParts
-  - DeepLab v3
   - handpose
   - facemesh
 - Input Stream of UVC device.

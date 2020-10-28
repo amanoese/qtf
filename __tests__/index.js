@@ -35,12 +35,23 @@ describe('',()=>{
       JSON.parse(stdout.toString())
     }).not.toThrow();
   })
+
   test('body-pix',async ()=>{
     let out_img = tempy.file({extension:'jpg'})
 
     await expect(fsp.access(out_img)).rejects.toThrow()
 
     await exec(`${qtf_cmd} body-pix ${test_img} -o ${out_img}`)
+
+    await expect(fsp.access(out_img)).resolves.toBeUndefined()
+  })
+
+  test('deeplab',async ()=>{
+    let out_img = tempy.file({extension:'jpg'})
+
+    await expect(fsp.access(out_img)).rejects.toThrow()
+
+    await exec(`${qtf_cmd} deeplab ${test_img} -o ${out_img}`)
 
     await expect(fsp.access(out_img)).resolves.toBeUndefined()
   })
