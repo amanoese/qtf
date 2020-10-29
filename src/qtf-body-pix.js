@@ -80,6 +80,7 @@ async function out_image (imagePath,outPath = './out.jpg',result = {}) {
 }
 
 module.exports = {
+  load_model,
   save_model,
   run,
   out_image,

@@ -39,7 +39,7 @@ async function save_model () {
 }
 
 module.exports = {
-  //load_model,
+  load_model,
   run,
   save_model,
 }

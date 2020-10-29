@@ -5,10 +5,15 @@ const tempy = require('tempy');
 const exec = util.promisify(require('child_process').exec);
 const fsp = require('fs').promises;
 
+const { tf_loader } = require('../src/qtf-tfjs-loader');
 const qtf_mobilenet = require('../src/qtf-mobilenet.js')
 const _qtf_mobilenet = rewire('../src/qtf-mobilenet.js')
 
 const test_img = '__tests__/lena.jpg'
+
+beforeAll(async ()=>{
+  await tf_loader()
+})
 
 describe('mobilenet by gcp remote model',()=>{
   beforeAll(async ()=>{
@@ -17,7 +22,7 @@ describe('mobilenet by gcp remote model',()=>{
 
   test('load',async ()=>{
 
-    let model = await _qtf_mobilenet.__get__('load_model')()
+    let model = await qtf_mobilenet.load_model()
 
     expect(model)
       .toHaveProperty(
@@ -30,7 +35,7 @@ describe('mobilenet by gcp remote model',()=>{
 
     await qtf_mobilenet.save_model()
 
-    let model = await _qtf_mobilenet.__get__('load_model')()
+    let model = await qtf_mobilenet.load_model()
 
     expect(model)
       .toHaveProperty(

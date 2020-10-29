@@ -5,10 +5,15 @@ const tempy = require('tempy');
 const exec = util.promisify(require('child_process').exec);
 const fsp = require('fs').promises;
 
+const { tf_loader } = require('../src/qtf-tfjs-loader');
 const qtf_blazeface = require('../src/qtf-blazeface.js')
 const _qtf_blazeface = rewire('../src/qtf-blazeface.js')
 
 const test_img = '__tests__/lena.jpg'
+
+beforeAll(async ()=>{
+  await tf_loader()
+})
 
 describe('blazeface by gcp remote model',()=>{
 
@@ -18,7 +23,7 @@ describe('blazeface by gcp remote model',()=>{
 
   test('load',async ()=>{
 
-    let model = await _qtf_blazeface.__get__('load_model')()
+    let model = await qtf_blazeface.load_model()
 
     expect(model)
       .toHaveProperty(
@@ -31,7 +36,7 @@ describe('blazeface by gcp remote model',()=>{
 
     await qtf_blazeface.save_model()
 
-    let model = await _qtf_blazeface.__get__('load_model')()
+    let model = await qtf_blazeface.load_model()
 
     expect(model)
       .toHaveProperty(

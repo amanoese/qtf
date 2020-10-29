@@ -18,6 +18,7 @@ const tf_loader = async ( backend ) => {
   await tf.ready()
   //console.log(support_backend)
   //console.log(tf.getBackend())
+  return tf
 }
 
 const tf_support_backend = () => {

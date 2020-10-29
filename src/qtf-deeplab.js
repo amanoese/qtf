@@ -1,6 +1,6 @@
 const fs = require('fs');
 const fsp = require('fs').promises;
-const { tf } = require('./qtf-tfjs-loader');
+const tf = require('@tensorflow/tfjs');
 const PImage = require('pureimage');
 const { img_to_t3d } = require('./utils.js');
 
@@ -19,7 +19,7 @@ let load_model = async (loadOption = {}) => {
       ...loadOption
     });
   } catch (err) {
-    console.error(err)
+    //console.error(err)
     return await deeplab.load()
   }
 }
@@ -88,6 +88,7 @@ async function out_image (imagePath,outPath = './out.jpg',predictions) {
 }
 
 module.exports = {
+  load_model,
   save_model,
   run,
   out_image,
