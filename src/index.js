@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 const { program } = require('@caporal/core');
 
-
-
 process.env['TF_CPP_MIN_LOG_LEVEL'] = '2' //avoid tf message
+
+const { tf, tf_loader, tf_support_backend } = require('./qtf-tfjs-loader');
 
 const qtf_posenet = require('./qtf-posenet.js')
 const qtf_blazeface = require('./qtf-blazeface.js')
@@ -110,6 +110,11 @@ program
     }
     await qtf_deeplab.out_image(args.inFilePath,options.o,result)
   })
+  .command('backend', 'show supports tfjs backend and now setting')
+  .action(async function({args, options, logger}) {
+    console.log(`now      : ${tf.getBackend()}`)
+    console.log(`supports : ${tf_support_backend()}`)
+  })
   .command('save', 'Download pre-trained moeles to local file')
   .argument(
      '<model-name>',
@@ -134,6 +139,8 @@ program
     }
   });
 
-program.run();
+tf_loader(process.env['QTF_BACKEND']).then(()=> {
+  program.run();
+})
 //program.run(process.argv.slice(2))
 

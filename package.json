@@ -17,6 +17,7 @@
     "@tensorflow-models/mobilenet": "^2.0.4",
     "@tensorflow-models/posenet": "^2.2.1",
     "@tensorflow/tfjs": "^2.6.0",
+    "@tensorflow/tfjs-backend-wasm": "^2.7.0",
     "@tensorflow/tfjs-core": "^2.6.0",
     "pureimage": "^0.2.5",
     "tempy": "^1.0.0"

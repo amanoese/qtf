@@ -1,8 +1,6 @@
 const fs = require('fs');
 const fsp = require('fs').promises;
-const tf = require('@tensorflow/tfjs');
-require('@tensorflow/tfjs-core');
-//const tf = require('@tensorflow/tfjs-core-gpu');
+const { tf } = require('./qtf-tfjs-loader');
 const PImage = require('pureimage');
 const { img_to_t3d } = require('./utils.js');
 

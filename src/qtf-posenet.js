@@ -2,8 +2,6 @@ const fs = require('fs');
 const fsp = require('fs').promises;
 const PImage = require('pureimage');
 const { img_to_t3d } = require('./utils.js');
-const { loader } = require('./qtf-tfjs-loader.js');
-const tf = loader()
 const posenet = require('@tensorflow-models/posenet');
 
 let load_model = async (loadOption = {}) => {
