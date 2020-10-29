@@ -18,7 +18,6 @@
     "@tensorflow-models/posenet": "^2.2.1",
     "@tensorflow/tfjs": "^2.6.0",
     "@tensorflow/tfjs-core": "^2.6.0",
-    "@tensorflow/tfjs-node": "^2.6.0",
     "pureimage": "^0.2.5",
     "tempy": "^1.0.0"
   },
