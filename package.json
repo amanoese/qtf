@@ -32,6 +32,9 @@
     "rollup-plugin-preserve-shebang": "^1.0.1",
     "rollup-plugin-terser": "^7.0.2"
   },
+  "optionalDependencies": {
+    "@tensorflow/tfjs-node": "^2.7.0"
+  },
   "author": "Seito Taka",
   "license": "Apache-2.0",
   "repository": "amanoese/qtf",
