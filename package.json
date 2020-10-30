@@ -1,6 +1,6 @@
 {
   "name": "qtf",
-  "version": "0.3.0",
+  "version": "0.3.2",
   "description": "command for want to Quick use TensorFlow.js on cli.",
   "main": "index.js",
   "bin": {
