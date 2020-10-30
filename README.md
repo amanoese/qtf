@@ -7,8 +7,6 @@ Quick Tensorflow.js on CLI
 This is the command that makes it easy on cli to take advantage of TensorFlow.js pre-trained models in [tfjs-models](https://github.com/tensorflow/tfjs-models).  
 If you want to use more features, I recommend using [tfjs-models](https://github.com/tensorflow/tfjs-models).
 
-qtf is not Qtransformers.
-
 ## Table of Contents
 
 - [Install](#install)
@@ -67,17 +65,17 @@ $ qtf posenet input.jpg -o output.jpg
 
 ### save
 
-This command uses a trained model on the internet (Google Cloud Starage)..
-If use offline or you use the command several times.
-It's good idea to download trained model file to local.
+This command uses a trained model on the internet (Google Cloud Starage)...  
+If use offline or you use the command several times.  
+It's good idea to download trained model file to local.  
 
 ```bash
 $ qtf save all
 ```
 
-But trained model data want to diskspace.
-you can also choose the model to download.
-See below for details.
+But trained model data want to diskspace.  
+you can also choose the model to download.  
+See below for details.  
 
 ```bash
 $ qtf save --help
@@ -149,16 +147,16 @@ now      : wasm
 supports : cpu,wasm,tensorflow
 ```
 
-This command support backends by cpu,wasm,tensorflow.
+This command support backends.
 
-| name | project | overview |
+| name | project | personal opinion |
 | --- | --- | --- |
-| cpu | [tfjs-backend-cpu](https://github.com/tensorflow/tfjs/tree/master/tfjs-backend-cpu)    | pureJS. slowly. but it's works in most environments. |
+| cpu | [tfjs-backend-cpu](https://github.com/tensorflow/tfjs/tree/master/tfjs-backend-cpu)    | pureJS. slowly. but it's works in most environments. so cool. |
 | wasm | [tfjs-backend-wasm](https://github.com/tensorflow/tfjs/tree/master/tfjs-backend-wasm) | WebAssembly. fast. environment independent. But that power was beyond my skill. It probably only works with "blazeface". |
 | tensorflow | [tfjs-node](https://github.com/tensorflow/tfjs/tree/master/tfjs-node)           | C Library. fast. but It depends on node-gyp. if you want to install, please see [this link](https://github.com/tensorflow/tfjs/tree/master/tfjs-node).|
 
-A backend that fails to install does not appear in support.
-may be increased by a global installation, like ```npm -g @tensorflow/tfjs-node```
+A backend that fails to install does not appear in support.  
+may be increased by a global installation, like ```npm -g @tensorflow/tfjs-node```  
 I haven't checked. It probably works.
 
 ## Develop
@@ -188,3 +186,5 @@ $ act push
   - facemesh
 - Input Stream of UVC device.
 
+## Other
+qtf is not Qtransformers.
