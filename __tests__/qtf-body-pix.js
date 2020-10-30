@@ -55,7 +55,9 @@ describe('body-pix by local model',()=>{
     //pixel value 0:130541
     //pixel value 1:131603
     expect(data.filter(v=>v).length)
-      .toEqual(131603)
+      .toBeGreaterThanOrEqual(130318);
+    expect(data.filter(v=>v).length)
+      .toBeLessThanOrEqual(131603);
   })
 
   test('out_image',async ()=>{
