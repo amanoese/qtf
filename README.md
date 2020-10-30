@@ -151,7 +151,7 @@ supports : cpu,wasm,tensorflow
 
 This command support backends by cpu,wasm,tensorflow.
 
-| name | liblaly | overview |
+| name | project | overview |
 | --- | --- | --- |
 | cpu | [tfjs-backend-cpu](https://github.com/tensorflow/tfjs/tree/master/tfjs-backend-cpu)    | pureJS. slowly. but it's works in most environments. |
 | wasm | [tfjs-backend-wasm](https://github.com/tensorflow/tfjs/tree/master/tfjs-backend-wasm) | WebAssembly. fast. environment independent. But that power was beyond my skill. It probably only works with "blazeface". |
