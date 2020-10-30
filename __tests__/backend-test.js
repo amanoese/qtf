@@ -1,6 +1,9 @@
 const path = require('path')
-const appRoot = `${__dirname}/..`
-const qtf_cmd = path.resolve(`${appRoot}/src/index.js`)
+let qtf_cmd = `${__dirname}/src/index.js`;
+if (process.platform === 'win32') {
+  qtf_cmd = `node ${__dirname}\\src\\index.js`;
+}
+const qtf_cmd
 const tempy = require('tempy');
 
 const fs   = require('fs');
@@ -12,7 +15,7 @@ const test_img = '__tests__/lena.jpg'
 
 describe('backend test',()=>{
   beforeAll(async ()=>{
-    await exec(`${qtf_cmd} save blazeface`)
+    //await exec(`${qtf_cmd} save blazeface`)
   })
 
   test('default backend',async ()=>{
