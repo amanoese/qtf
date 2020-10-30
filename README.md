@@ -34,8 +34,7 @@ $ source ~/.bashrc
 
 ### Windows
 
-not support.
-If you are using WSL2. See 'Maual Install'.
+support. but some features don't work.
 
 ## Usage
 
@@ -118,6 +117,37 @@ If you not set loadOption. output size fixed 512x512.
 | ![](https://raw.githubusercontent.com/amanoese/qtf/docs/doc/me.jpg) | <img src="https://raw.githubusercontent.com/amanoese/qtf/docs/doc/me-deeplab.jpg" width="256" height="256" /> |
 
 
+## Backend
+
+you can check suuport backend.
+
+```bash
+$ qtf backend
+now      : tensorflow
+supports : cpu,wasm,tensorflow
+```
+
+If you want to use the backend.set environment to 'QTF_BACKEND'
+
+```bash
+$ export QTF_BACKEND=wasm
+
+$ qtf backend
+now      : wasm
+supports : cpu,wasm,tensorflow
+```
+
+This command support backends by cpu,wasm,tensorflow.
+
+| name | liblaly | overview |
+| --- | --- | --- |
+| cpu | [tfjs-backend-cpu](https://github.com/tensorflow/tfjs/tree/master/tfjs-backend-cpu)    | pureJS. very slowly. but it's works in most environments. |
+| wasm | [tfjs-backend-wasm](https://github.com/tensorflow/tfjs/tree/master/tfjs-backend-wasm) | WebAssembly. fast. Environment independent. But that power was beyond my skill. It probably only works with balseface. |
+| tensorflow | [tfjs-node](https://github.com/tensorflow/tfjs/tree/master/tfjs-node)           | C Liblaly. fast. but It depends on node-gyp. if you want to install, please see [this link](https://github.com/tensorflow/tfjs/tree/master/tfjs-node).|
+
+A backend that fails to install does not appear in support.
+may be increased by a global installation, like ```npm -g @tensorflow/tfjs-node```
+I haven't checked. It probably works.
 
 ## Develop
 
