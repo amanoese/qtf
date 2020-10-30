@@ -9,7 +9,7 @@ const exec = util.promisify(require('child_process').exec);
 
 const test_img = '__tests__/lena.jpg'
 
-describe('',()=>{
+describe('backend test',()=>{
   beforeAll(async ()=>{
     await exec(`${qtf_cmd} save blazeface`)
   })
