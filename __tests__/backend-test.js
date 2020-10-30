@@ -3,7 +3,6 @@ let qtf_cmd = `${__dirname}/src/index.js`;
 if (process.platform === 'win32') {
   qtf_cmd = `node ${__dirname}\\src\\index.js`;
 }
-const qtf_cmd
 const tempy = require('tempy');
 
 const fs   = require('fs');
