@@ -1,5 +1,6 @@
+const path = require('path')
 const appRoot = `${__dirname}/..`
-const qtf_cmd = `${appRoot}/src/index.js`
+const qtf_cmd = path.resolve(`${appRoot}/src/index.js`)
 const tempy = require('tempy');
 
 const fs   = require('fs');

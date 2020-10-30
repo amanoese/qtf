@@ -7,7 +7,8 @@
     "qtf": "src/index.js"
   },
   "scripts": {
-    "test": "jest --runInBand"
+    "test": "jest --runInBand",
+    "test:win": "jest __tests__/backend-test.js --testNamePattern=cpu --detectOpenHandles"
   },
   "dependencies": {
     "@caporal/core": "^2.0.2",
