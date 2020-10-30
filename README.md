@@ -13,6 +13,7 @@ If you want to use more features, I recommend using [tfjs-models](https://github
 - [Install](#install)
 - [Support models](#support-models)
 - [Result Example](#result-example)
+- [Save Local](#save-local)
 - [Backend](#backend)
 - [Develop](#develop)
 - [On the roadmap, but still missing](#on-the-roadmap-but-still-missing)
@@ -35,24 +36,6 @@ $ qtf posenet input.jpg -o output.jpg
 | input.jpg | output.jpg |
 | --- | --- |
 | ![](https://raw.githubusercontent.com/amanoese/qtf/docs/doc/me.jpg) | ![](https://raw.githubusercontent.com/amanoese/qtf/docs/doc/me-posenet.jpg) |
-
-### save
-
-This command uses a trained model on the internet (Google Cloud Starage)...  
-If use offline or you use the command several times.  
-It's good idea to download trained model file to local.  
-
-```bash
-$ qtf save all
-```
-
-But trained model data want to diskspace.  
-you can also choose the model to download.  
-See below for details.  
-
-```bash
-$ qtf save --help
-```
 
 ## Install
 
@@ -127,6 +110,23 @@ If you not set loadOption. output size fixed 513x513.
 | --- | --- |
 | ![](https://raw.githubusercontent.com/amanoese/qtf/docs/doc/me.jpg) | ![](https://raw.githubusercontent.com/amanoese/qtf/docs/doc/me-deeplab.jpg) |
 
+## Save Local
+
+This command uses a trained model on the internet (Google Cloud Starage)...  
+If use offline or you use the command several times.  
+It's good idea to download trained model file to local.  
+
+```bash
+$ qtf save all
+```
+
+But trained model data want to diskspace.  
+you can also choose the model to download.  
+See below for details.  
+
+```bash
+$ qtf save --help
+```
 
 ## Backend
 
