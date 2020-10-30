@@ -1,7 +1,7 @@
 const path = require('path')
-let qtf_cmd = `${__dirname}/src/index.js`;
+let qtf_cmd = `${__dirname}/../src/index.js`;
 if (process.platform === 'win32') {
-  qtf_cmd = `node ${__dirname}\\src\\index.js`;
+  qtf_cmd = `node ${__dirname}\\..\\src\\index.js`;
 }
 const tempy = require('tempy');
 
