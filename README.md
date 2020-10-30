@@ -32,7 +32,7 @@ $ npm i -g qtf
 ```bash
 $ cd '<your any directory>'
 
-$ git clone https://github.com/amanoese/gtf.git
+$ git clone https://github.com/amanoese/qtf.git
 $ cd qtf
 $ npm install
 $ npm link
