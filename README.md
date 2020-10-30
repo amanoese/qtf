@@ -9,40 +9,13 @@ If you want to use more features, I recommend using [tfjs-models](https://github
 
 ## Table of Contents
 
-- [Install](#install)
 - [Usage](#usage)
+- [Install](#install)
 - [Support models](#support-models)
 - [Result Example](#result-example)
 - [Backend](#backend)
 - [Develop](#develop)
 - [On the roadmap, but still missing](#on-the-roadmap-but-still-missing)
-
-## Install
-
-If you using node.js on nodebrew ...
-
-```bash
-$ npm i -g qtf
-```
-
-### Manual
-
-```bash
-$ cd '<your any directory>'
-
-$ git clone https://github.com/amanoese/qtf.git
-$ cd qtf
-$ npm install
-$ npm link
-
-## if you can not run 'npm link'.
-$ echo "alias=$PWD/src/index.js" >> ~/.bashrc
-$ source ~/.bashrc
-```
-
-### Windows
-
-support. but some features don't work.
 
 ## Usage
 
@@ -80,6 +53,34 @@ See below for details.
 ```bash
 $ qtf save --help
 ```
+
+## Install
+
+If you using node.js on nodebrew ...
+
+```bash
+$ npm i -g qtf
+```
+
+### Manual
+
+```bash
+$ cd '<your any directory>'
+
+$ git clone https://github.com/amanoese/qtf.git
+$ cd qtf
+$ npm install
+$ npm link
+
+## if you can not run 'npm link'.
+$ echo "alias=$PWD/src/index.js" >> ~/.bashrc
+$ source ~/.bashrc
+```
+
+### Windows
+
+support. but some features don't work.
+
 
 ## Support models
 
