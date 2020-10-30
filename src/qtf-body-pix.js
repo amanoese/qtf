@@ -1,7 +1,8 @@
 const fs = require('fs');
 const fsp = require('fs').promises;
-const tf = require('@tensorflow/tfjs-node');
-//const tf = require('@tensorflow/tfjs-node-gpu');
+const tf = require('@tensorflow/tfjs');
+require('@tensorflow/tfjs-core');
+//const tf = require('@tensorflow/tfjs-core-gpu');
 const bodyPix = require('@tensorflow-models/body-pix');
 const PImage = require('pureimage');
 const { img_to_t3d } = require('./utils.js');
@@ -79,6 +80,7 @@ async function out_image (imagePath,outPath = './out.jpg',result = {}) {
 }
 
 module.exports = {
+  load_model,
   save_model,
   run,
   out_image,

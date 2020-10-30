@@ -5,20 +5,25 @@ const tempy = require('tempy');
 const exec = util.promisify(require('child_process').exec);
 const fsp = require('fs').promises;
 
+const { tf_loader } = require('../src/qtf-tfjs-loader');
 const qtf_deeplab = require('../src/qtf-deeplab.js')
 const _qtf_deeplab = rewire('../src/qtf-deeplab.js')
 
 const test_img = '__tests__/lena.jpg'
 
+beforeAll(async ()=>{
+  await tf_loader()
+})
+
 describe('bod-pix by gcp remote model',()=>{
+  //let qtf_deeplab ,_qtf_deeplab;
 
   beforeAll(async ()=>{
     await exec('bash -c "test -d models/deeplab && rm -r models/deeplab" || :')
   })
 
   test('load',async ()=>{
-
-    let model = await _qtf_deeplab.__get__('load_model')()
+    let model = await qtf_deeplab.load_model()
 
     expect(model)
       .toHaveProperty(
@@ -29,9 +34,9 @@ describe('bod-pix by gcp remote model',()=>{
 
   test('save_model',async ()=>{
 
-    await qtf_deeplab.save_model()
+    await qtf_deeplab.save_model();
 
-    let model = await _qtf_deeplab.__get__('load_model')()
+    let model = await qtf_deeplab.load_model()
 
     expect(model)
       .toHaveProperty(

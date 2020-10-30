@@ -7,7 +7,8 @@
     "qtf": "src/index.js"
   },
   "scripts": {
-    "test": "jest --runInBand"
+    "test": "jest --runInBand",
+    "test:win": "jest __tests__/backend-test.js --testNamePattern=cpu --detectOpenHandles"
   },
   "dependencies": {
     "@caporal/core": "^2.0.2",
@@ -18,7 +19,6 @@
     "@tensorflow-models/posenet": "^2.2.1",
     "@tensorflow/tfjs": "^2.6.0",
     "@tensorflow/tfjs-core": "^2.6.0",
-    "@tensorflow/tfjs-node": "^2.6.0",
     "pureimage": "^0.2.5",
     "tempy": "^1.0.0"
   },
@@ -32,6 +32,10 @@
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-preserve-shebang": "^1.0.1",
     "rollup-plugin-terser": "^7.0.2"
+  },
+  "optionalDependencies": {
+    "@tensorflow/tfjs-node": "^2.7.0",
+    "@tensorflow/tfjs-backend-wasm": "^2.7.0"
   },
   "author": "Seito Taka",
   "license": "Apache-2.0",

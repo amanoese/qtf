@@ -5,10 +5,15 @@ const tempy = require('tempy');
 const exec = util.promisify(require('child_process').exec);
 const fsp = require('fs').promises;
 
+const { tf_loader } = require('../src/qtf-tfjs-loader');
 const qtf_posenet = require('../src/qtf-posenet.js')
 const _qtf_posenet = rewire('../src/qtf-posenet.js')
 
 const test_img = '__tests__/lena.jpg'
+
+beforeAll(async ()=>{
+  await tf_loader()
+})
 
 describe('posenet by gcp remote model',()=>{
   beforeAll(async ()=>{
@@ -17,7 +22,7 @@ describe('posenet by gcp remote model',()=>{
 
   test('load',async ()=>{
 
-    let model = await _qtf_posenet.__get__('load_model')()
+    let model = await qtf_posenet.load_model()
 
     expect(model)
       .toHaveProperty(
@@ -30,7 +35,7 @@ describe('posenet by gcp remote model',()=>{
 
     await qtf_posenet.save_model()
 
-    let model = await _qtf_posenet.__get__('load_model')()
+    let model = await qtf_posenet.load_model()
 
     expect(model)
       .toHaveProperty(

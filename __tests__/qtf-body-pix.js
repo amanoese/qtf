@@ -5,10 +5,15 @@ const tempy = require('tempy');
 const exec = util.promisify(require('child_process').exec);
 const fsp = require('fs').promises;
 
+const { tf_loader } = require('../src/qtf-tfjs-loader');
 const qtf_bodyPix = require('../src/qtf-body-pix.js')
 const _qtf_bodyPix = rewire('../src/qtf-body-pix.js')
 
 const test_img = '__tests__/lena.jpg'
+
+beforeAll(async ()=>{
+  await tf_loader()
+})
 
 describe('bod-pix by gcp remote model',()=>{
 
@@ -18,7 +23,7 @@ describe('bod-pix by gcp remote model',()=>{
 
   test('load',async ()=>{
 
-    let model = await _qtf_bodyPix.__get__('load_model')()
+    let model = await qtf_bodyPix.load_model()
 
     expect(model)
       .toHaveProperty(
@@ -31,7 +36,7 @@ describe('bod-pix by gcp remote model',()=>{
 
     await qtf_bodyPix.save_model()
 
-    let model = await _qtf_bodyPix.__get__('load_model')()
+    let model = await qtf_bodyPix.load_model()
 
     expect(model)
       .toHaveProperty(
@@ -50,7 +55,9 @@ describe('body-pix by local model',()=>{
     //pixel value 0:130541
     //pixel value 1:131603
     expect(data.filter(v=>v).length)
-      .toEqual(131603)
+      .toBeGreaterThanOrEqual(130318);
+    expect(data.filter(v=>v).length)
+      .toBeLessThanOrEqual(131603);
   })
 
   test('out_image',async ()=>{

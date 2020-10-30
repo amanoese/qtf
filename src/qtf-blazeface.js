@@ -1,7 +1,6 @@
 const fs = require('fs');
 const fsp = require('fs').promises;
-const tf = require('@tensorflow/tfjs-node');
-//const tf = require('@tensorflow/tfjs-node-gpu');
+const tf = require('@tensorflow/tfjs');
 const blazeface = require('@tensorflow-models/blazeface');
 const PImage = require('pureimage');
 const { img_to_t3d } = require('./utils.js');
@@ -28,6 +27,7 @@ let load_model = async (loadOption = {}) => {
       inputWidth, inputHeight, maxFaces, iouThreshold, scoreThreshold
     );
   } catch (err) {
+    //console.error(err)
     return await blazeface.load(loadOption);
   }
 }
@@ -86,6 +86,7 @@ async function out_image (imagePath,outPath = './out.jpg',result = {}) {
 }
 
 module.exports = {
+  load_model,
   run,
   save_model,
   out_image,
