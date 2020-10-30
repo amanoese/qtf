@@ -153,9 +153,9 @@ This command support backends by cpu,wasm,tensorflow.
 
 | name | liblaly | overview |
 | --- | --- | --- |
-| cpu | [tfjs-backend-cpu](https://github.com/tensorflow/tfjs/tree/master/tfjs-backend-cpu)    | pureJS. very slowly. but it's works in most environments. |
-| wasm | [tfjs-backend-wasm](https://github.com/tensorflow/tfjs/tree/master/tfjs-backend-wasm) | WebAssembly. fast. Environment independent. But that power was beyond my skill. It probably only works with balseface. |
-| tensorflow | [tfjs-node](https://github.com/tensorflow/tfjs/tree/master/tfjs-node)           | C Liblaly. fast. but It depends on node-gyp. if you want to install, please see [this link](https://github.com/tensorflow/tfjs/tree/master/tfjs-node).|
+| cpu | [tfjs-backend-cpu](https://github.com/tensorflow/tfjs/tree/master/tfjs-backend-cpu)    | pureJS. slowly. but it's works in most environments. |
+| wasm | [tfjs-backend-wasm](https://github.com/tensorflow/tfjs/tree/master/tfjs-backend-wasm) | WebAssembly. fast. environment independent. But that power was beyond my skill. It probably only works with "blazeface". |
+| tensorflow | [tfjs-node](https://github.com/tensorflow/tfjs/tree/master/tfjs-node)           | C Library. fast. but It depends on node-gyp. if you want to install, please see [this link](https://github.com/tensorflow/tfjs/tree/master/tfjs-node).|
 
 A backend that fails to install does not appear in support.
 may be increased by a global installation, like ```npm -g @tensorflow/tfjs-node```
