@@ -9,6 +9,16 @@ If you want to use more features, I recommend using [tfjs-models](https://github
 
 qtf is not Qtransformers.
 
+## Table of Contents
+
+- [Install](#install)
+- [Usage](#usage)
+- [Support models](#support-models)
+- [Result Example](#result-example)
+- [Backend](#backend)
+- [Develop](#develop)
+- [On the roadmap, but still missing](on-the-roadmap,-but-still-missing)
+
 ## Install
 
 If you using node.js on nodebrew ...
@@ -76,16 +86,18 @@ $ qtf save --help
 ## Support models
 
 Supports the following model now.
-  - posenet
-  - mobilenet
-  - blazeface
-  - BodyPix (Person segmentation)
-  - DeepLab v3
+- posenet
+- mobilenet
+- blazeface
+- BodyPix (Person segmentation)
+- DeepLab v3
 
 ```bash
 ## check support model.
 $ qtf --help
 ```
+## Result Example
+
 ### posenet
 See Usage.
 
@@ -110,11 +122,11 @@ Output is JSON only.
 
 ### DeepLab v3
 
-If you not set loadOption. output size fixed 512x512.
+If you not set loadOption. output size fixed 513x513.
 
 | input.jpg | output.jpg |
 | --- | --- |
-| ![](https://raw.githubusercontent.com/amanoese/qtf/docs/doc/me.jpg) | <img src="https://raw.githubusercontent.com/amanoese/qtf/docs/doc/me-deeplab.jpg" width="256" height="256" /> |
+| ![](https://raw.githubusercontent.com/amanoese/qtf/docs/doc/me.jpg) | ![](https://raw.githubusercontent.com/amanoese/qtf/docs/doc/me-deeplab.jpg) |
 
 
 ## Backend
