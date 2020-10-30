@@ -17,4 +17,4 @@ jobs:
     - name: npm install
       run: npm install --no-optional
     - name: npm test
-      run: npm test:win
+      run: npm run test:win
