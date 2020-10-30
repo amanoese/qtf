@@ -21,7 +21,8 @@ describe('',()=>{
   })
 
   test('tensorflow backend',async ()=>{
-    let { stdout } = await exec(`QTF_BACKEND=tensorflow ${qtf_cmd} blazeface ${test_img}`)
+    let env = { ...process.env, 'QTF_BACKEND':'tensorflow' }
+    let { stdout } = await exec(`${qtf_cmd} blazeface ${test_img}`,{ env });
 
     expect(() => {
       JSON.parse(stdout.toString())
@@ -29,7 +30,8 @@ describe('',()=>{
   })
 
   test('cpu backend',async ()=>{
-    let { stdout } = await exec(`QTF_BACKEND=cpu ${qtf_cmd} blazeface ${test_img}`)
+    let env = { ...process.env, 'QTF_BACKEND':'cpu' }
+    let { stdout } = await exec(`${qtf_cmd} blazeface ${test_img}`,{ env });
 
     expect(() => {
       JSON.parse(stdout.toString())
@@ -37,7 +39,8 @@ describe('',()=>{
   })
 
   test('wasm backend',async ()=>{
-    let { stdout } = await exec(`QTF_BACKEND=wasm ${qtf_cmd} blazeface ${test_img}`)
+    let env = { ...process.env, 'QTF_BACKEND':'wasm' }
+    let { stdout } = await exec(`${qtf_cmd} blazeface ${test_img}`,{ env });
 
     expect(() => {
       JSON.parse(stdout.toString())
