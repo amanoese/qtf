@@ -7,7 +7,15 @@ Quick Tensorflow.js on CLI
 This is the command that makes it easy on cli to take advantage of TensorFlow.js pre-trained models in [tfjs-models](https://github.com/tensorflow/tfjs-models).  
 If you want to use more features, I recommend using [tfjs-models](https://github.com/tensorflow/tfjs-models).
 
-qtf is not Qtransformers.
+## Table of Contents
+
+- [Install](#install)
+- [Usage](#usage)
+- [Support models](#support-models)
+- [Result Example](#result-example)
+- [Backend](#backend)
+- [Develop](#develop)
+- [On the roadmap, but still missing](#on-the-roadmap-but-still-missing)
 
 ## Install
 
@@ -22,7 +30,7 @@ $ npm i -g qtf
 ```bash
 $ cd '<your any directory>'
 
-$ git clone https://github.com/amanoese/gtf.git
+$ git clone https://github.com/amanoese/qtf.git
 $ cd qtf
 $ npm install
 $ npm link
@@ -34,8 +42,7 @@ $ source ~/.bashrc
 
 ### Windows
 
-not support.
-If you are using WSL2. See 'Maual Install'.
+support. but some features don't work.
 
 ## Usage
 
@@ -58,17 +65,17 @@ $ qtf posenet input.jpg -o output.jpg
 
 ### save
 
-This command uses a trained model on the internet (Google Cloud Starage)..
-If use offline or you use the command several times.
-It's good idea to download trained model file to local.
+This command uses a trained model on the internet (Google Cloud Starage)...  
+If use offline or you use the command several times.  
+It's good idea to download trained model file to local.  
 
 ```bash
 $ qtf save all
 ```
 
-But trained model data want to diskspace.
-you can also choose the model to download.
-See below for details.
+But trained model data want to diskspace.  
+you can also choose the model to download.  
+See below for details.  
 
 ```bash
 $ qtf save --help
@@ -77,16 +84,18 @@ $ qtf save --help
 ## Support models
 
 Supports the following model now.
-  - posenet
-  - mobilenet
-  - blazeface
-  - BodyPix (Person segmentation)
-  - DeepLab v3
+- posenet
+- mobilenet
+- blazeface
+- BodyPix (Person segmentation)
+- DeepLab v3
 
 ```bash
 ## check support model.
 $ qtf --help
 ```
+## Result Example
+
 ### posenet
 See Usage.
 
@@ -111,13 +120,44 @@ Output is JSON only.
 
 ### DeepLab v3
 
-If you not set loadOption. output size fixed 512x512.
+If you not set loadOption. output size fixed 513x513.
 
 | input.jpg | output.jpg |
 | --- | --- |
-| ![](https://raw.githubusercontent.com/amanoese/qtf/docs/doc/me.jpg) | <img src="https://raw.githubusercontent.com/amanoese/qtf/docs/doc/me-deeplab.jpg" width="256" height="256" /> |
+| ![](https://raw.githubusercontent.com/amanoese/qtf/docs/doc/me.jpg) | ![](https://raw.githubusercontent.com/amanoese/qtf/docs/doc/me-deeplab.jpg) |
 
 
+## Backend
+
+you can check suuport backend.
+
+```bash
+$ qtf backend
+now      : tensorflow
+supports : cpu,wasm,tensorflow
+```
+
+If you want to use the backend.set environment to 'QTF_BACKEND'
+
+```bash
+$ export QTF_BACKEND=wasm
+
+$ qtf backend
+now      : wasm
+supports : cpu,wasm,tensorflow
+```
+
+This command support backends.
+
+| name | project | personal opinion |
+| --- | --- | --- |
+| cpu | [tfjs-backend-cpu](https://github.com/tensorflow/tfjs/tree/master/tfjs-backend-cpu)    | pureJS. slowly. but it's works in most environments. so cool. |
+| wasm | [tfjs-backend-wasm](https://github.com/tensorflow/tfjs/tree/master/tfjs-backend-wasm) | WebAssembly. fast. environment independent. But that power was beyond my skill. It probably only works with "blazeface". |
+| tensorflow | [tfjs-node](https://github.com/tensorflow/tfjs/tree/master/tfjs-node)           | C Library. fast. but It depends on node-gyp. if you want to install, please see [this link](https://github.com/tensorflow/tfjs/tree/master/tfjs-node).|
+
+A backend that fails to install does not appear in support.  
+may be increased by a global installation, like ```npm -g @tensorflow/tfjs-node```  
+I haven't checked. It probably works.
 
 ## Develop
 
@@ -146,3 +186,5 @@ $ act push
   - facemesh
 - Input Stream of UVC device.
 
+## Other
+qtf is not Qtransformers.
