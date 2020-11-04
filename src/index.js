@@ -1,4 +1,7 @@
 #!/usr/bin/env node
+require('source-map-support').install({
+  environment: 'node'
+});
 const { program } = require('@caporal/core');
 
 process.env['TF_CPP_MIN_LOG_LEVEL'] = '2' //avoid tf message
@@ -10,6 +13,7 @@ const qtf_blazeface = require('./qtf-blazeface.js')
 const qtf_mobilenet = require('./qtf-mobilenet.js')
 const qtf_bodyPix = require('./qtf-body-pix.js')
 const qtf_deeplab = require('./qtf-deeplab.js')
+const qtf_facemesh = require('./qtf-facemesh.js')
 
 const supports = ['posenet','blazeface','mobilenet','body-pix']
 
@@ -17,7 +21,7 @@ program
   .name('qtf')
   .bin('qtf')
   .version(require('../package.json').version)
-  .command('posenet', 'Using Posenet')
+  .command('posenet', 'Using Posenet\n[cpu,tensorflow]')
   .argument(
     '<in-file-path>',
     'input image file\nSupport for JPG,PNG,BMP'
@@ -36,7 +40,7 @@ program
     }
     await qtf_posenet.out_image(args.inFilePath,options.o,result)
   })
-  .command('blazeface', 'Using blazeface')
+  .command('blazeface', 'Using blazeface\n[cpu,tensorflow,wasm]')
   .argument(
     '<in-file-path>',
     'input image file\nSupport for JPG,PNG,BMP'
@@ -51,7 +55,7 @@ program
     }
     await qtf_blazeface.out_image(args.inFilePath,options.o,result)
   })
-  .command('mobilenet', 'Using mobilenet')
+  .command('mobilenet', 'Using mobilenet\n[cpu,tensorflow]')
   .argument(
     '<in-file-path>',
     'input image file\nSupport for JPG,PNG,BMP'
@@ -60,7 +64,7 @@ program
     let result = await qtf_mobilenet.run(args.inFilePath)
     console.log(JSON.stringify(result))
   })
-  .command('body-pix', 'Using body-pix')
+  .command('body-pix', 'Using body-pix\n[cpu,tensorflow]')
   .argument(
     '<in-file-path>',
     'input image file\nSupport for JPG,PNG,BMP'
@@ -85,7 +89,7 @@ program
     }
     await qtf_bodyPix.out_image(args.inFilePath,options.o,result)
   })
-  .command('deeplab', 'Using DeepLab V3')
+  .command('deeplab', 'Using DeepLab V3\n[cpu,tensorflow]')
   .argument(
     '<in-file-path>',
     'input image file\nSupport for JPG,PNG,BMP'
@@ -109,6 +113,26 @@ program
       return
     }
     await qtf_deeplab.out_image(args.inFilePath,options.o,result)
+  })
+  .command('facemesh', 'Using facemesh (Face landmarks detection)\n[cpu]')
+  .argument(
+    '<in-file-path>',
+    'input image file\nSupport for JPG,PNG,BMP'
+   )
+  .option(
+    '-a <raw-array>',
+    'Does not convert the output JSON\'s Uinit8Array to an Array.'
+   )
+  .option('-o <out-file-path>','output to jpeg', { required :false })
+  .action(async function({args, options, logger}) {
+    //console.log('facemesh?')
+    let result = await qtf_facemesh.run(args.inFilePath)
+
+    if(options.o == null) {
+      console.log(JSON.stringify(result))
+      return
+    }
+    //await qtf_deeplab.out_image(args.inFilePath,options.o,result)
   })
   .command('backend', 'show supports tfjs backend and now setting')
   .action(async function({args, options, logger}) {
