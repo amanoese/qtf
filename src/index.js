@@ -5,9 +5,6 @@ process.env['TF_CPP_MIN_LOG_LEVEL'] = '2' //avoid tf message
 
 const { tf, tf_loader, tf_support_backend } = require('./qtf-tfjs-loader');
 
-const tempy = require('tempy');
-const fsp = require('fs').promises;
-
 const qtf_posenet = require('./qtf-posenet.js')
 const qtf_blazeface = require('./qtf-blazeface.js')
 const qtf_mobilenet = require('./qtf-mobilenet.js')
@@ -15,32 +12,6 @@ const qtf_bodyPix = require('./qtf-body-pix.js')
 const qtf_deeplab = require('./qtf-deeplab.js')
 
 const supports = ['posenet','blazeface','mobilenet','body-pix']
-
-var stream = require('stream');
-var util = require('util');
-
-var writable = new stream.Writable({
-  write: function(chunk, encoding, next) {
-    console.log(chunk.toString());
-    next();
-  }
-});
-
-const input_pipe = (callback) => {
-  //let stream = process.stdin.resume()
-  var soi = Buffer.from([0xff, 0xd8]);
-  var eoi = Buffer.from([0xff, 0xd9]);
-  //console.log(stream)
-  
-  //stream.on('data',(data)=>{
-  //  //console.log(data.indexOf(soi),data.indexOf(eoi),data.length)
-  //  callback(data)
-  //})
-  var MjpegConsumer = require("mjpeg-consumer");
-  var consumer = new MjpegConsumer();
-  let stream = process.stdin.pipe(consumer).pipe(writable)
-  process.stdin.resume()
-}
 
 program
   .name('qtf')
@@ -55,31 +26,20 @@ program
   .option('-o <out-file-path>','output to jpeg', { required :false })
   .action(async function({args, options, logger}) {
     //console.log({args,options})
-    let LoadOption = options.l ? JSON.parse(options.l) : {}
 
-    let f = async (out_img) => {
-      console.log({out_img})
-      let result = await qtf_posenet.run(out_img||args.inFilePath,LoadOption)
-      if (options.o == null) {
-        console.log(JSON.stringify(result))
-        return
-      }
-      await qtf_posenet.out_image(args.inFilePath,options.o,result)
+    if(args.inFilePath === 'pipe:mjpeg') {
+      qtf_posenet.run_mjpeg()
+      return
     }
-    let out_img = ''
-    let p = f()
-    input_pipe(()=>{})
-    //input_pipe(data=>{
-    //  p.then(()=>{
-    //    out_img = tempy.file({extension:'jpg'})
-    //    var soi = Buffer.from([0xff, 0xd8]);
-    //    var eoi = Buffer.from([0xff, 0xd9]);
-    //    console.log(data.indexOf(soi),data.indexOf(eoi),data.length)
-    //    return fsp.writeFile(out_img,data)
-    //  }).then(()=>{
-    //    p = f(out_img)
-    //  })
-    //})
+
+    let LoadOption = options.l ? JSON.parse(options.l) : {}
+    let result = await qtf_posenet.run(args.inFilePath,LoadOption)
+
+    if (options.o == null) {
+      console.log(JSON.stringify(result))
+      return
+    }
+    await qtf_posenet.out_image(args.inFilePath,options.o,result)
   })
   .command('blazeface', 'Using blazeface')
   .argument(

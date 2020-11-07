@@ -46,6 +46,66 @@ async function run (imagePath,loadOption = {}) {
   const pose = await net.estimateSinglePose(img_Tensor3D);
   return pose
 }
+function run_mjpeg (imagePath,loadOption = {}) {
+
+  const tf = require('@tensorflow/tfjs-core');
+  const { Readable } = require('stream')
+
+  const P2J = require('pipe2jpeg');
+  let p2j = new P2J();
+
+  let model = null;
+  let get_load_model = async ({width,height}) => {
+    if (model == null) {
+      model = await load_model({
+        inputResolution:{ width, height },
+        ...loadOption,
+      })
+    }
+    return model
+  };
+
+  let running = false;
+
+  p2j.on('jpeg', async (jpegBuffer) => {
+    //console.log('received jpeg', jpegBuffer);
+    if(running == false) {
+      running = true
+      //console.time('all')
+      const stream = Readable.from(jpegBuffer)
+      //console.time('pimg')
+      const pimg = await PImage.decodeJPEGFromStream(stream);
+      //console.timeEnd('pimg')
+
+      const data = Array.from(pimg.data);
+
+      const img_Tensor3D = await tf
+        .tensor(data)
+        .reshape([-1,pimg.width,4])
+        .slice([0,0,0],[-1,-1,3]);
+
+      //console.time('predict')
+      const net = await get_load_model(pimg)
+      console.error(pimg)
+      const pose = await net.estimateSinglePose(img_Tensor3D);
+      console.log("\x1E"+JSON.stringify(pose))
+      //console.timeEnd('predict')
+      //console.timeEnd('all')
+      running = false
+    }
+  });
+
+  process.stdin.on('error', (error) => {
+    console.log(error);
+    process.exit(1);
+  });
+
+  process.stdin.on('exit', (code, signal) => {
+    console.log('exit', code, signal);
+  });
+
+  process.stdin.pipe(p2j);
+}
 
 async function out_image (imagePath,outPath = './out.jpg',result = {}) {
 
@@ -84,6 +144,7 @@ module.exports = {
   load_model,
   save_model,
   run,
+  run_mjpeg,
   out_image
 }
 
