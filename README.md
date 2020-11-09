@@ -56,7 +56,7 @@ $ npm install
 $ npm link
 
 ## if you can not run 'npm link'.
-$ echo "alias=$PWD/src/index.js" >> ~/.bashrc
+$ echo "alias qtf=$PWD/src/index.js" >> ~/.bashrc
 $ source ~/.bashrc
 ```
 
