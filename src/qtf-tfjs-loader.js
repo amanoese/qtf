@@ -4,9 +4,7 @@ let support_backend = []
 const tf_loader = async ( backend ) => {
   //WASM works in a variety of environments, but some features are poorly implemented
   try { require('@tensorflow/tfjs-backend-wasm') } catch { }
-  try { require('@tensorflow/tfjs-node-gpu')     } catch { }
-  //try { require('@tensorflow/tfjs-node')         } catch { }
-  console.log(tf.engine())
+  try { require('@tensorflow/tfjs-node') } catch { }
 
   support_backend = Object.keys(tf.engine().registryFactory);
 
@@ -18,8 +16,8 @@ const tf_loader = async ( backend ) => {
     tf.setBackend('cpu')
   }
   await tf.ready()
-  console.log({support_backend})
-  console.log(tf.getBackend())
+  //console.log(support_backend)
+  //console.log(tf.getBackend())
   return tf
 }
 
