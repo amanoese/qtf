@@ -37,15 +37,16 @@ $ qtf posenet input.jpg -o output.jpg
 | --- | --- |
 | ![](https://raw.githubusercontent.com/amanoese/qtf/docs/doc/me.jpg) | ![](https://raw.githubusercontent.com/amanoese/qtf/docs/doc/me-posenet.jpg) |
 
-## Install
-
-If you using node.js on nodebrew ...
+## Install (on Ubuntu)
 
 ```bash
 $ npm i -g qtf
+$ qtf save all
 ```
+If you using node.js on volta or nodebrew.
+We have confirmed works on it.
 
-### Manual
+### from Repository
 
 ```bash
 $ cd '<your any directory>'
@@ -60,10 +61,9 @@ $ echo "alias qtf=$PWD/src/index.js" >> ~/.bashrc
 $ source ~/.bashrc
 ```
 
-### Windows
+### on Windows
 
 support. but some features don't work.
-
 
 ## Support models
 
@@ -81,13 +81,23 @@ $ qtf --help
 ## Result Example
 
 ### posenet
-See Usage.
+
+```bash
+$ qtf posenet input.jpg -o output.jpg
+```
+
+| input.jpg | output.jpg |
+| --- | --- |
+| ![](https://raw.githubusercontent.com/amanoese/qtf/docs/doc/me.jpg) | ![](https://raw.githubusercontent.com/amanoese/qtf/docs/doc/me-posenet.jpg) |
 
 ### mobilenet
 Output is JSON only.
 
 ### blazeface
 
+```bash
+$ qtf blazeface input.jpg -o output.jpg
+```
 | input.jpg | output.jpg |
 | --- | --- |
 | ![](https://raw.githubusercontent.com/amanoese/qtf/docs/doc/me.jpg) | ![](https://raw.githubusercontent.com/amanoese/qtf/docs/doc/me-blazeface.jpg) |
@@ -95,6 +105,11 @@ Output is JSON only.
 ### BodyPix
 
 #### Person segmentation
+
+```bash
+$ qtf body-pix input.jpg -o output.jpg
+```
+
 | input.jpg | output.jpg |
 | --- | --- |
 | ![](https://raw.githubusercontent.com/amanoese/qtf/docs/doc/me.jpg) | ![](https://raw.githubusercontent.com/amanoese/qtf/docs/doc/me-body-pix.jpg) |
@@ -104,13 +119,17 @@ Output is JSON only.
 
 ### DeepLab v3
 
+```bash
+$ qtf deeplab input.jpg -o output.jpg
+```
+
 If you not set loadOption. output size fixed 513x513.
 
 | input.jpg | output.jpg |
 | --- | --- |
 | ![](https://raw.githubusercontent.com/amanoese/qtf/docs/doc/me.jpg) | ![](https://raw.githubusercontent.com/amanoese/qtf/docs/doc/me-deeplab.jpg) |
 
-## Save Local
+## Save Models on Local
 
 This command uses a trained model on the internet (Google Cloud Starage)...  
 If use offline or you use the command several times.  

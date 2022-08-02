@@ -1,6 +1,6 @@
 const appRoot = `${__dirname}/..`
 const qtf_cmd = `${appRoot}/src/index.js`
-const tempy = require('tempy');
+const tmp = require('tmp');
 
 const fs   = require('fs');
 const fsp = require('fs').promises;
@@ -37,7 +37,7 @@ describe('',()=>{
   })
 
   test('body-pix',async ()=>{
-    let out_img = tempy.file({extension:'jpg'})
+    let out_img = tmp.tmpNameSync({ postfix:'.jpg' });
 
     await expect(fsp.access(out_img)).rejects.toThrow()
 
@@ -47,7 +47,7 @@ describe('',()=>{
   })
 
   test('deeplab',async ()=>{
-    let out_img = tempy.file({extension:'jpg'})
+    let out_img = tmp.tmpNameSync({ postfix:'.jpg' });
 
     await expect(fsp.access(out_img)).rejects.toThrow()
 
