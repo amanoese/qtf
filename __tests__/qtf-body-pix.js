@@ -1,6 +1,6 @@
 const util = require('util');
 const rewire = require('rewire')
-const tempy = require('tempy');
+const tmp = require('tmp');
 
 const exec = util.promisify(require('child_process').exec);
 const fsp = require('fs').promises;
@@ -62,7 +62,7 @@ describe('body-pix by local model',()=>{
 
   test('out_image',async ()=>{
     let result = await qtf_bodyPix.run(test_img)
-    let out_img = tempy.file({extension:'jpg'})
+    let out_img = tmp.tmpNameSync({ postfix:'.jpg' });
 
     await expect(fsp.access(out_img)).rejects.toThrow()
 

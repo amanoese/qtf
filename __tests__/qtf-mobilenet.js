@@ -1,6 +1,5 @@
 const util = require('util');
 const rewire = require('rewire')
-const tempy = require('tempy');
 
 const exec = util.promisify(require('child_process').exec);
 const fsp = require('fs').promises;
