@@ -1,7 +1,8 @@
+.github/*
 node_modules/
 !models/.gitkeep
 models/*
-dist/
+dist/*
 !dist/.gitkeep
 *.jpg
 *.tif
