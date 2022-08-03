@@ -15,9 +15,9 @@ describe('',()=>{
   })
 
   test('help',async ()=>{
-    let { stdout } = await exec(`${qtf_cmd} --no-color --help`)
+    let { stdout } = await exec(`${qtf_cmd} --help`)
     expect(stdout.toString())
-      .toMatch(/qtf \d.\d\.\d/)
+      .toMatch(/qtf <command>/)
   })
 
   test('blazeface',async ()=>{

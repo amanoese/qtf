@@ -1,146 +1,135 @@
 #!/usr/bin/env node
-const { program } = require('@caporal/core');
-
 process.env['TF_CPP_MIN_LOG_LEVEL'] = '2' //avoid tf message
 
 const { tf, tf_loader, tf_support_backend } = require('./qtf-tfjs-loader');
 
-const qtf_posenet = require('./qtf-posenet.js')
-const qtf_blazeface = require('./qtf-blazeface.js')
-const qtf_mobilenet = require('./qtf-mobilenet.js')
-const qtf_bodyPix = require('./qtf-body-pix.js')
-const qtf_deeplab = require('./qtf-deeplab.js')
+const qtf = {
+  posenet : require('./qtf-posenet.js'),
+  blazeface : require('./qtf-blazeface.js'),
+  mobilenet : require('./qtf-mobilenet.js'),
+  bodyPix : require('./qtf-body-pix.js'),
+  deeplab : require('./qtf-deeplab.js')
+}
 
-const supports = ['posenet','blazeface','mobilenet','body-pix']
+const supports = Object.keys(qtf)
 
-program
-  .name('qtf')
-  .bin('qtf')
-  .version(require('../package.json').version)
-  .command('posenet', 'Using Posenet')
-  .argument(
-    '<in-file-path>',
-    'input image file\nSupport for JPG,PNG,BMP'
-   )
-  .option('-l <load-option>','useing load option by json', { required :false })
-  .option('-o <out-file-path>','output to jpeg', { required :false })
-  .action(async function({args, options, logger}) {
-    //console.log({args,options})
 
-    let LoadOption = options.l ? JSON.parse(options.l) : {}
-    let result = await qtf_posenet.run(args.inFilePath,LoadOption)
+let default_runner = async (argv) => {
+  let qtf_model = qtf[argv._]
+  let LoadOption = argv.l ? JSON.parse(argv.l) : {}
+  let result = await qtf_model.run(argv.inFilePath,LoadOption)
 
-    if (options.o == null) {
-      console.log(JSON.stringify(result))
-      return
-    }
-    await qtf_posenet.out_image(args.inFilePath,options.o,result)
-  })
-  .command('blazeface', 'Using blazeface')
-  .argument(
-    '<in-file-path>',
-    'input image file\nSupport for JPG,PNG,BMP'
-   )
-  .option('-o <out-file-path>','output to jpeg', { required :false })
-  .action(async function({args, options, logger}) {
-
-    let result = await qtf_blazeface.run(args.inFilePath)
-    if (options.o == null) {
-      console.log(JSON.stringify(result))
-      return
-    }
-    await qtf_blazeface.out_image(args.inFilePath,options.o,result)
-  })
-  .command('mobilenet', 'Using mobilenet')
-  .argument(
-    '<in-file-path>',
-    'input image file\nSupport for JPG,PNG,BMP'
-   )
-  .action(async function({args, options, logger}) {
-    let result = await qtf_mobilenet.run(args.inFilePath)
+  if (argv.o == null) {
     console.log(JSON.stringify(result))
-  })
-  .command('body-pix', 'Using body-pix')
-  .argument(
-    '<in-file-path>',
-    'input image file\nSupport for JPG,PNG,BMP'
-   )
-  .option(
-    '-a <raw-array>',
-    'Does not convert the output JSON\'s Uinit8Array to an Array.'
-   )
-  .option('-o <out-file-path>','output to jpeg', { required :false })
-  .action(async function({args, options, logger}) {
-    let result = await qtf_bodyPix.run(args.inFilePath)
-
-    if(options.a == null) {
-      result = {
-        ...result,
-        data: Array.from(result.data)
-      };
-    }
-    if(options.o == null) {
-      console.log(JSON.stringify(result))
-      return
-    }
-    await qtf_bodyPix.out_image(args.inFilePath,options.o,result)
-  })
-  .command('deeplab', 'Using DeepLab V3')
-  .argument(
-    '<in-file-path>',
-    'input image file\nSupport for JPG,PNG,BMP'
-   )
-  .option(
-    '-a <raw-array>',
-    'Does not convert the output JSON\'s Uinit8Array to an Array.'
-   )
-  .option('-o <out-file-path>','output to jpeg', { required :false })
-  .action(async function({args, options, logger}) {
-    let result = await qtf_deeplab.run(args.inFilePath)
-
-    if(options.a == null) {
-      result = {
-        ...result,
-        segmentationMap: Array.from(result.segmentationMap)
-      };
-    }
-    if(options.o == null) {
-      console.log(JSON.stringify(result))
-      return
-    }
-    await qtf_deeplab.out_image(args.inFilePath,options.o,result)
-  })
-  .command('backend', 'show supports tfjs backend and now setting')
-  .action(async function({args, options, logger}) {
-    console.log(`now      : ${tf.getBackend()}`)
-    console.log(`supports : ${tf_support_backend()}`)
-  })
-  .command('save', 'Download pre-trained moeles to local file')
-  .argument(
-     '<model-name>',
-     `pre-trained model name`,
-     { validator : ['all',...supports] }
-   )
-  .action(async function({args, options, logger}) {
-    if(/^(posenet|all)$/.test(args.modelName)) {
-      qtf_posenet.save_model();
-    }
-    if(/^(blazeface|all)$/.test(args.modelName)) {
-      qtf_blazeface.save_model();
-    }
-    if(/^(mobilenet|all)$/.test(args.modelName)) {
-      qtf_mobilenet.save_model();
-    }
-    if(/^(body-pix|all)$/.test(args.modelName)) {
-      qtf_bodyPix.save_model();
-    }
-    if(/^(deeplab|all)$/.test(args.modelName)) {
-      qtf_deeplab.save_model();
-    }
-  });
+    return
+  }
+  await qtf_model.out_image(argv.inFilePath,argv.o,result)
+}
+const default_options = (yargs) => {
+  return yargs
+    .positional('in-file-path', { describe: 'input image file. (format JPG,PNG,BMP)' })
+    .option('l',{ alias: 'load-option', describe: 'using load option by json' })
+    .option('o',{ alias: 'out-file-path', describe: 'output to jpeg' })
+}
 
 tf_loader(process.env['QTF_BACKEND']).then(()=> {
-  program.run();
-})
-//program.run(process.argv.slice(2))
+  const yargs = require('yargs/yargs')(process.argv.slice(2))
+    .scriptName("qtf")
+    .command('posenet <in-file-path>', 'Using Posenet',
+      default_options,
+      default_runner
+    )
+    .command('blazeface <in-file-path>', 'Using blazeface',
+      default_options,
+      default_runner
+    )
+    .command('mobilenet <in-file-path>', 'Using mobilenet',
+      default_options,
+      default_runner
+    )
+    .command('body-pix <in-file-path>', 'Using body-pix',
+      (yargs) => {
+        return default_options(yargs)
+          .option('a',{ alias: 'raw-array', describe: 'Does not convert the output JSON\'s Uinit8Array to an Array.' })
+      },
+      async function(argv) {
+        let result = await qtf.bodyPix.run(argv.inFilePath)
 
+        if(argv.a == null) {
+          result = {
+            ...result,
+            data: Array.from(result.data)
+          };
+        }
+        if(argv.o == null) {
+          console.log(JSON.stringify(result))
+          return
+        }
+        await qtf.bodyPix.out_image(argv.inFilePath,argv.o,result)
+      }
+    )
+    .command('deeplab <in-file-path>', 'Using deeplab',
+      (yargs) => {
+        return default_options(yargs)
+          .option('a',{ alias: 'raw-array', describe: 'Does not convert the output JSON\'s Uinit8Array to an Array.' })
+      },
+      async function(argv) {
+        let result = await qtf.deeplab.run(argv.inFilePath)
+
+        if(argv.a == null) {
+          result = {
+            ...result,
+            segmentationMap: Array.from(result.segmentationMap)
+          }
+        }
+
+        if(argv.o == null) {
+          console.log(JSON.stringify(result))
+          return
+        }
+        await qtf.deeplab.out_image(argv.inFilePath,argv.o,result)
+      }
+    )
+    .command('backend', 'show supports tfjs backend and now setting',{},
+      async function(argv) {
+        console.log(`now      : ${tf.getBackend()}`)
+        console.log(`supports : ${tf_support_backend()}`)
+      }
+    )
+    .command('save <model-name>', 'Download pre-trained moeles to local file',
+      (argv) =>{
+        return argv.choices('model-name', [ ...supports, 'all' ])
+      },
+      async function(argv) {
+        if(/^(posenet|all)$/.test(argv.modelName)) {
+          qtf.posenet.save_model();
+        }
+        if(/^(blazeface|all)$/.test(argv.modelName)) {
+          qtf.blazeface.save_model();
+        }
+        if(/^(mobilenet|all)$/.test(argv.modelName)) {
+          qtf.mobilenet.save_model();
+        }
+        if(/^(body-pix|all)$/.test(argv.modelName)) {
+          qtf.bodyPix.save_model();
+        }
+        if(/^(deeplab|all)$/.test(argv.modelName)) {
+          qtf.deeplab.save_model();
+        }
+      }
+    )
+    .usage('qtf <command>')
+    .command({
+      command: '*',
+      handler() {
+        yargs.showHelp()
+      }
+    })
+    .example([
+      ['qtf posenet sample.jpg','#usage posenet'],
+      ['qtf posenet sample.jpg -o output.jpg','#usage output file']
+    ])
+    .help()
+    .detectLocale(false)
+  yargs.parse()
+})
